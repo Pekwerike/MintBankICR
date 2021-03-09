@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -20,7 +21,7 @@ import com.pekwerike.mintbankicr.ui.screens.HomePageScreen
 import com.pekwerike.mintbankicr.ui.theme.MintBankICRTheme
 
 class MainActivityViewModel : ViewModel(){
-    private var _shouldShowCameraPreview = MutableLiveData<Boolean>(false)
+    private var _shouldShowCameraPreview = MutableLiveData(false)
     val shouldShowCameraPreview : LiveData<Boolean> = _shouldShowCameraPreview
 
     fun cameraPermissionGranted(state : Boolean){
@@ -30,15 +31,15 @@ class MainActivityViewModel : ViewModel(){
 class MainActivity : ComponentActivity() {
     private val mainActivityViewModel by viewModels<MainActivityViewModel>()
 
+    @ExperimentalAnimationApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MintBankICRTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    if (canShowCameraPreview.value) {
-                        HomePageScreen(cameraLifecycleOwner = this)
-                    }
+                        HomePageScreen(cameraLifecycleOwner = this, mainActivityViewModel)
+
                 }
             }
         }
@@ -53,7 +54,7 @@ class MainActivity : ComponentActivity() {
     private fun requestCameraPermission(){
          if(isCameraPermissionGranted()){
              // start camera preview
-             canShowCameraPreview.value = true
+            mainActivityViewModel.cameraPermissionGranted(true)
          }else {
              ActivityCompat.requestPermissions(this, arrayOf(CAMERA_PERMISSION),
              CAMERA_PERMISSION_REQUEST_CODE)
@@ -68,6 +69,7 @@ class MainActivity : ComponentActivity() {
         if(requestCode == CAMERA_PERMISSION_REQUEST_CODE){
             if(isCameraPermissionGranted()){
                 // start camera preview
+                mainActivityViewModel.cameraPermissionGranted(true)
             }else {
                 // TODO manage the scenario when a user denies the permission parmenently
                 requestCameraPermission()
