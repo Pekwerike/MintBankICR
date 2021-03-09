@@ -65,4 +65,7 @@ dependencies {
     // CameraX View class
     implementation "androidx.camera:camera-view:1.0.0-alpha14"
 
+    // ML Kit text recognition dependency
+    implementation 'com.google.android.gms:play-services-mlkit-text-recognition:16.0.0'
+
 }

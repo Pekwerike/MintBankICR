@@ -50,6 +50,7 @@ fun HomePageScreen(
                             it.setSurfaceProvider(this.cameraPreview.createSurfaceProvider())
                         }
                     val imageAnalyzer = ImageAnalysis.Builder()
+                        .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                         .build()
                         .also {
                             it.setAnalyzer(
