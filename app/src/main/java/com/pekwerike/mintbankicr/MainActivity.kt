@@ -1,11 +1,15 @@
 package com.pekwerike.mintbankicr
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.camera.core.ImageAnalysis
+import androidx.camera.core.ImageProxy
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -69,4 +73,5 @@ class MainActivity : ComponentActivity() {
         const val CAMERA_PERMISSION_REQUEST_CODE = 100
         const val CAMERA_PERMISSION = Manifest.permission.CAMERA
     }
+
 }

@@ -1,6 +1,7 @@
 package com.pekwerike.mintbankicr.ui.screens
 
 import androidx.camera.core.CameraSelector
+import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.compose.animation.AnimatedVisibility
@@ -16,8 +17,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidViewBinding
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
-import com.pekwerike.mintbankicr.MainActivityViewModel
+import com.pekwerike.mintbankicr.MainActivity
 import com.pekwerike.mintbankicr.databinding.CameraPreviewLayoutBinding
+import com.pekwerike.mintbankicr.ocr.CardReaderOCR
+import com.pekwerike.mintbankicr.viewmodel.MainActivityViewModel
+import java.util.concurrent.Executors
 
 @ExperimentalAnimationApi
 @Composable
@@ -26,13 +30,16 @@ fun HomePageScreen(
     mainActivityViewModel: MainActivityViewModel
 ) {
     val context = LocalContext.current
-    val shouldShowCameraPreview = mainActivityViewModel.shouldShowCameraPreview.observeAsState(false)
+    val shouldShowCameraPreview =
+        mainActivityViewModel.shouldShowCameraPreview.observeAsState(false)
     Column(modifier = Modifier.fillMaxSize(1f)) {
 
         AnimatedVisibility(visible = shouldShowCameraPreview.value) {
 
-            AndroidViewBinding(CameraPreviewLayoutBinding::inflate,
-                modifier = Modifier.fillMaxSize(1f)) {
+            AndroidViewBinding(
+                CameraPreviewLayoutBinding::inflate,
+                modifier = Modifier.fillMaxSize(1f)
+            ) {
                 val cameraProviderFuture = ProcessCameraProvider.getInstance(context)
                 cameraProviderFuture.addListener(Runnable {
                     val cameraProvider: ProcessCameraProvider =
@@ -42,13 +49,22 @@ fun HomePageScreen(
                         .also {
                             it.setSurfaceProvider(this.cameraPreview.createSurfaceProvider())
                         }
+                    val imageAnalyzer = ImageAnalysis.Builder()
+                        .build()
+                        .also {
+                            it.setAnalyzer(
+                                Executors.newSingleThreadExecutor(),
+                                CardReaderOCR(context)
+                            )
+                        }
                     val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
                     try {
                         cameraProvider.unbindAll()
                         cameraProvider.bindToLifecycle(
                             cameraLifecycleOwner,
                             cameraSelector,
-                            cameraPreview
+                            cameraPreview,
+                            imageAnalyzer
                         )
                     } catch (exceptiion: Exception) {
 
