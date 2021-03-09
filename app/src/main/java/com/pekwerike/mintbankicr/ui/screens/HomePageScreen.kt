@@ -23,6 +23,7 @@ import com.pekwerike.mintbankicr.cameraconfigurations.configureCameraLifecycleAn
 import com.pekwerike.mintbankicr.cameraconfigurations.takePhoto
 import com.pekwerike.mintbankicr.databinding.CameraPreviewLayoutBinding
 import com.pekwerike.mintbankicr.ocr.CardNumberExtractor
+import com.pekwerike.mintbankicr.ui.screens.components.CameraPreview
 import com.pekwerike.mintbankicr.viewmodel.MainActivityViewModel
 import com.pekwerike.mintbankicr.viewmodel.NetworkViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -45,18 +46,12 @@ fun HomePageScreen(
     Column(modifier = Modifier.fillMaxSize(1f)) {
 
         AnimatedVisibility(visible = shouldShowCameraPreview.value) {
-
-            AndroidViewBinding(
-                CameraPreviewLayoutBinding::inflate,
-                modifier = Modifier
-                    .fillMaxSize(1f)
-                    .clickable {
-                        // take photo
-                        takePhoto(context, mainActivityViewModel, coroutineScope, networkViewModel)
-                    }
-            ) {
-                configureCameraLifecycleAndPreview(context, mainActivityViewModel)
-            }
+          CameraPreview(
+              context = context,
+              mainActivityViewModel = mainActivityViewModel,
+              networkViewModel = networkViewModel,
+              coroutineScope = coroutineScope
+          )
         }
     }
 }
