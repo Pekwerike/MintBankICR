@@ -26,7 +26,7 @@ fun CameraPreviewLayoutBinding.configureCameraLifecycleAndPreview(
     mainActivityViewModel: MainActivityViewModel
 ) {
     val cameraProviderFuture = ProcessCameraProvider.getInstance(context)
-    cameraProviderFuture.addListener(Runnable {
+    cameraProviderFuture.addListener({
         val cameraProvider: ProcessCameraProvider =
             cameraProviderFuture.get()
         val cameraPreview = Preview.Builder()
@@ -64,6 +64,7 @@ fun takePhoto(
     val baseDirectory = File(context.getExternalFilesDir(null), "Images")
     if (!baseDirectory.exists()) baseDirectory.mkdirs()
     val imageFile = File(baseDirectory, "IMG${System.currentTimeMillis()}.jpg")
+    val imageFileTwo = File(baseDirectory,  "images1.jpeg")
     val outputOptions = ImageCapture.OutputFileOptions.Builder(imageFile)
         .build()
     mainActivityViewModel.imageCapture.value?.takePicture(
@@ -80,7 +81,7 @@ fun takePhoto(
                         CardNumberExtractor(
                             context,
                             networkViewModel
-                        ).getGetCardNumber(Uri.fromFile(imageFile))
+                        ).getGetCardNumber(imageFileTwo.path)
                     }
                 }
 

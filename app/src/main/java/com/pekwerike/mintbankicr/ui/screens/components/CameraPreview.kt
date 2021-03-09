@@ -19,12 +19,12 @@ fun CameraPreview(
     context: Context,
     mainActivityViewModel: MainActivityViewModel,
     networkViewModel: NetworkViewModel,
-    coroutineScope: CoroutineScope
+    coroutineScope: CoroutineScope,
+    modifier: Modifier
 ) {
     AndroidViewBinding(
         CameraPreviewLayoutBinding::inflate,
-        modifier = Modifier
-            .fillMaxSize(1f)
+        modifier = modifier
             .clickable {
                 // take photo
                 takePhoto(context, mainActivityViewModel, coroutineScope, networkViewModel)

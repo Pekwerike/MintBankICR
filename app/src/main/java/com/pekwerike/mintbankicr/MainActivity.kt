@@ -20,10 +20,12 @@ import com.google.mlkit.vision.text.TextRecognition
 import com.pekwerike.mintbankicr.ui.screens.HomePageScreen
 import com.pekwerike.mintbankicr.ui.theme.MintBankICRTheme
 import com.pekwerike.mintbankicr.viewmodel.MainActivityViewModel
+import com.pekwerike.mintbankicr.viewmodel.NetworkViewModel
 
 
 class MainActivity : ComponentActivity() {
     private val mainActivityViewModel by viewModels<MainActivityViewModel>()
+    private val networkViewModel by viewModels<NetworkViewModel>()
 
     @ExperimentalAnimationApi
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +34,7 @@ class MainActivity : ComponentActivity() {
             MintBankICRTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                        HomePageScreen(cameraLifecycleOwner = this, mainActivityViewModel)
+                        HomePageScreen(networkViewModel, mainActivityViewModel)
 
                 }
             }

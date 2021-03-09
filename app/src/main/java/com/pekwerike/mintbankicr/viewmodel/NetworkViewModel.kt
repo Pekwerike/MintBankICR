@@ -1,5 +1,6 @@
 package com.pekwerike.mintbankicr.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,6 +11,7 @@ class NetworkViewModel : ViewModel() {
 
     fun cardNumberCollected(cardNumber: Long) {
         _cardNumber.value = cardNumber
+        Log.i("Text", cardNumber.toString())
     }
 
 }
