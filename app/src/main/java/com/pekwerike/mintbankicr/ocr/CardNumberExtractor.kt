@@ -8,38 +8,28 @@ import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.Text
 import com.google.mlkit.vision.text.TextRecognition
 import com.pekwerike.mintbankicr.R
+import com.pekwerike.mintbankicr.viewmodel.MainActivityViewModel
 import java.lang.NumberFormatException
 
-class CardNumberExtractor(private val context: Context) {
+class CardNumberExtractor(private val context: Context,
+private val mainActivityViewModel: MainActivityViewModel) {
 
-    suspend fun getGetCardNumber(imageFileUri: Uri): Long {
+     fun getGetCardNumber(imageFileUri: Uri) {
         val inputImage = InputImage.fromFilePath(context, imageFileUri)
-        TextRecognition.getClient().process(inputImage).addOnSuccessListener {
-            Log.i("Text Recognition", "Image processing successful")
 
-        }.addOnFailureListener {
-            Log.i("Text Recognition", "Image processing failed")
-        }
-        val inputImage2 = InputImage.fromBitmap(
-            BitmapFactory
-                .decodeResource(context.resources, R.drawable.thomascullen_visa_card), 0
-        )
-        var cardNumber: Long = -1
-        TextRecognition.getClient().process(inputImage2).addOnSuccessListener {
+         TextRecognition.getClient().process(inputImage).addOnSuccessListener {
             it?.let {
-                it.textBlocks.forEach {
+                for(block in it.textBlocks){
                     val numbers = checkForCardNumber(it.text)
                     if (kotlin.math.log10(numbers.toDouble()).toInt() + 1 >= 16) {
-                        cardNumber = numbers
-                        Log.i("Text", "Card Number is : $cardNumber")
+
+
+                        break
                     }
                 }
             }
         }
-        Log.i("Text", cardNumber.toString())
-        return cardNumber
     }
-
 
     private fun checkForCardNumber(text: String): Long {
         val spaceFreeBlock: String = text.replace("\\s".toRegex(), "")
