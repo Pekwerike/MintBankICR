@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -12,11 +13,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.app.ActivityCompat
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.pekwerike.mintbankicr.ui.screens.HomePageScreen
 import com.pekwerike.mintbankicr.ui.theme.MintBankICRTheme
 
+class MainActivityViewModel : ViewModel(){
+    private var _shouldShowCameraPreview = MutableLiveData<Boolean>(false)
+    val shouldShowCameraPreview : LiveData<Boolean> = _shouldShowCameraPreview
+
+    fun cameraPermissionGranted(state : Boolean){
+        _shouldShowCameraPreview.value = state
+    }
+}
 class MainActivity : ComponentActivity() {
-    private var canShowCameraPreview = mutableStateOf(false)
+    private val mainActivityViewModel by viewModels<MainActivityViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
