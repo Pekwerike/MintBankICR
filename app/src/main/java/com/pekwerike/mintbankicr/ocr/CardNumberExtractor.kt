@@ -26,11 +26,16 @@ class CardNumberExtractor(
                     val numbers = checkForCardNumber(block.text)
                     if (kotlin.math.log10(numbers.toDouble()).toInt() + 1 >= 16) {
                         networkViewModel.cardNumberCollected(numbers)
+                        deleteCacheFile(imageFilePath)
                         break
                     }
                 }
             }
         }
+    }
+
+    private fun deleteCacheFile(filePath: String) {
+        File(filePath).delete()
     }
 
     private fun checkForCardNumber(text: String): Long {

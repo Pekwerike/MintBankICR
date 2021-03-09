@@ -19,6 +19,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
+import kotlin.random.Random
 
 
 fun CameraPreviewLayoutBinding.configureCameraLifecycleAndPreview(
@@ -63,8 +64,8 @@ fun takePhoto(
 ) {
     val baseDirectory = File(context.getExternalFilesDir(null), "Images")
     if (!baseDirectory.exists()) baseDirectory.mkdirs()
-    val imageFile = File(baseDirectory, "IMG${System.currentTimeMillis()}.jpg")
-    val imageFileTwo = File(baseDirectory,  "images1.jpeg")
+    val imageFile = File(baseDirectory, "IMG${Random.nextInt(10, 1000000)}.jpg")
+
     val outputOptions = ImageCapture.OutputFileOptions.Builder(imageFile)
         .build()
     mainActivityViewModel.imageCapture.value?.takePicture(
@@ -81,7 +82,7 @@ fun takePhoto(
                         CardNumberExtractor(
                             context,
                             networkViewModel
-                        ).getGetCardNumber(imageFileTwo.path)
+                        ).getGetCardNumber(imageFile.absolutePath)
                     }
                 }
 

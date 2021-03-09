@@ -1,10 +1,12 @@
 package com.pekwerike.mintbankicr.ui.screens.components
 
 import android.content.Context
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.viewinterop.AndroidViewBinding
 import com.pekwerike.mintbankicr.cameraconfigurations.configureCameraLifecycleAndPreview
 import com.pekwerike.mintbankicr.cameraconfigurations.takePhoto
@@ -29,6 +31,7 @@ fun CameraPreview(
                 // take photo
                 takePhoto(context, mainActivityViewModel, coroutineScope, networkViewModel)
             }
+
     ) {
         configureCameraLifecycleAndPreview(context, mainActivityViewModel)
     }
