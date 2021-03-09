@@ -9,25 +9,12 @@ import androidx.activity.viewModels
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.app.ActivityCompat
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.pekwerike.mintbankicr.ui.screens.HomePageScreen
 import com.pekwerike.mintbankicr.ui.theme.MintBankICRTheme
+import com.pekwerike.mintbankicr.viewmodel.MainActivityViewModel
 
-class MainActivityViewModel : ViewModel(){
-    private var _shouldShowCameraPreview = MutableLiveData(false)
-    val shouldShowCameraPreview : LiveData<Boolean> = _shouldShowCameraPreview
 
-    fun cameraPermissionGranted(state : Boolean){
-        _shouldShowCameraPreview.value = state
-    }
-}
 class MainActivity : ComponentActivity() {
     private val mainActivityViewModel by viewModels<MainActivityViewModel>()
 
