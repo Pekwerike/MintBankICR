@@ -2,6 +2,7 @@
 buildscript {
     ext {
         compose_version = '1.0.0-beta01'
+        camerax_version = "1.0.0-beta07"
     }
     repositories {
         google()
