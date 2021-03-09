@@ -1,7 +1,6 @@
 package com.pekwerike.mintbankicr.ui.screens
 
 import android.net.Uri
-import android.util.Size
 import android.widget.Toast
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
@@ -11,19 +10,15 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidViewBinding
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
-import com.pekwerike.mintbankicr.MainActivity
 import com.pekwerike.mintbankicr.databinding.CameraPreviewLayoutBinding
 import com.pekwerike.mintbankicr.ocr.CardNumberExtractor
-import com.pekwerike.mintbankicr.ocr.CardReaderOCR
 import com.pekwerike.mintbankicr.viewmodel.MainActivityViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async

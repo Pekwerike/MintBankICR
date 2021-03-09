@@ -5,11 +5,11 @@ import org.junit.Before
 
 class CardNumberExtractorTest {
     private lateinit var cardNumberExtractor: CardNumberExtractor
-    ApplicationPr
+
 
     @Before
     fun before(){
-        cardNumberExtractor = CardNumberExtractor()
+
     }
 
 }
