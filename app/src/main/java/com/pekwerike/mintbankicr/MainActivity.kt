@@ -9,18 +9,23 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.app.ActivityCompat
+import com.pekwerike.mintbankicr.ui.screens.HomePageScreen
 import com.pekwerike.mintbankicr.ui.theme.MintBankICRTheme
 
 class MainActivity : ComponentActivity() {
+    private var canShowCameraPreview = mutableStateOf(false)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MintBankICRTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-
+                    if (canShowCameraPreview.value) {
+                        HomePageScreen(cameraLifecycleOwner = this)
+                    }
                 }
             }
         }
@@ -35,6 +40,7 @@ class MainActivity : ComponentActivity() {
     private fun requestCameraPermission(){
          if(isCameraPermissionGranted()){
              // start camera preview
+             canShowCameraPreview.value = true
          }else {
              ActivityCompat.requestPermissions(this, arrayOf(CAMERA_PERMISSION),
              CAMERA_PERMISSION_REQUEST_CODE)
