@@ -24,6 +24,7 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+        requestCameraPermission()
     }
 
     // confirm if permission to use the camera has been granted by the user
