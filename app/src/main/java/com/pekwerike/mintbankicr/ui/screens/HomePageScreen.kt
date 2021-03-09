@@ -1,11 +1,12 @@
 package com.pekwerike.mintbankicr.ui.screens
 
-import androidx.camera.core.CameraSelector
-import androidx.camera.core.ImageAnalysis
-import androidx.camera.core.Preview
+import android.util.Size
+import android.widget.Toast
+import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -21,6 +22,7 @@ import com.pekwerike.mintbankicr.MainActivity
 import com.pekwerike.mintbankicr.databinding.CameraPreviewLayoutBinding
 import com.pekwerike.mintbankicr.ocr.CardReaderOCR
 import com.pekwerike.mintbankicr.viewmodel.MainActivityViewModel
+import java.io.File
 import java.util.concurrent.Executors
 
 @ExperimentalAnimationApi
@@ -39,6 +41,26 @@ fun HomePageScreen(
             AndroidViewBinding(
                 CameraPreviewLayoutBinding::inflate,
                 modifier = Modifier.fillMaxSize(1f)
+                    .clickable {
+                        // take photo
+                        val baseDirectory = File(context.getExternalFilesDir(null), "Images")
+                        if(!baseDirectory.exists()) baseDirectory.mkdirs()
+                        val imageFile = File(baseDirectory, "IMG${System.currentTimeMillis()}.jpg")
+                        val outputOptions = ImageCapture.OutputFileOptions.Builder(imageFile).build()
+                        mainActivityViewModel.imageCapture.value?.takePicture(
+                            outputOptions,
+                            ContextCompat.getMainExecutor(context), object : ImageCapture.OnImageSavedCallback{
+                                override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                                    Toast.makeText(context, "Image captured", Toast.LENGTH_SHORT).show()
+                                }
+
+                                override fun onError(exception: ImageCaptureException) {
+                                    Toast.makeText(context, "Image capture failed", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        )
+
+                    }
             ) {
                 val cameraProviderFuture = ProcessCameraProvider.getInstance(context)
                 cameraProviderFuture.addListener(Runnable {
@@ -49,6 +71,9 @@ fun HomePageScreen(
                         .also {
                             it.setSurfaceProvider(this.cameraPreview.createSurfaceProvider())
                         }
+                   mainActivityViewModel.imageCaptureInstanceReady(ImageCapture.Builder()
+                        .build())
+
                     val imageAnalyzer = ImageAnalysis.Builder()
                         .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                         .build()
@@ -58,16 +83,18 @@ fun HomePageScreen(
                                 CardReaderOCR(context)
                             )
                         }
-                    val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+                    val cameraSelector = CameraSelector.Builder()
+                        .requireLensFacing(CameraSelector.LENS_FACING_BACK)
+                        .build()
                     try {
                         cameraProvider.unbindAll()
                         cameraProvider.bindToLifecycle(
-                            cameraLifecycleOwner,
+                            context as LifecycleOwner,
                             cameraSelector,
                             cameraPreview,
-                            imageAnalyzer
+                            mainActivityViewModel.imageCapture.value
                         )
-                    } catch (exceptiion: Exception) {
+                    } catch (exception: Exception) {
 
                     }
                 }, ContextCompat.getMainExecutor(context))

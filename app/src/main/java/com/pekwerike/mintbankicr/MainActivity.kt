@@ -3,6 +3,7 @@ package com.pekwerike.mintbankicr
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -14,6 +15,8 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.core.app.ActivityCompat
+import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.text.TextRecognition
 import com.pekwerike.mintbankicr.ui.screens.HomePageScreen
 import com.pekwerike.mintbankicr.ui.theme.MintBankICRTheme
 import com.pekwerike.mintbankicr.viewmodel.MainActivityViewModel
@@ -35,6 +38,7 @@ class MainActivity : ComponentActivity() {
             }
         }
         requestCameraPermission()
+
     }
 
     // confirm if permission to use the camera has been granted by the user
