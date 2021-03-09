@@ -22,15 +22,17 @@ class CardNumberExtractor(private val context: Context) {
         }
         val inputImage2 = InputImage.fromBitmap(
             BitmapFactory
-                .decodeResource(context.resources, R.drawable.cardone), 0
+                .decodeResource(context.resources, R.drawable.thomascullen_visa_card), 0
         )
         var cardNumber: Long = -1
         TextRecognition.getClient().process(inputImage2).addOnSuccessListener {
             it?.let {
                 it.textBlocks.forEach {
-                    val numbers = checkForCardNumber(it)
-                    Log.i("Text", numbers.toString())
-                    if(numbers >= 16) cardNumber = numbers
+                    val numbers = checkForCardNumber(it.text)
+                    if (kotlin.math.log10(numbers.toDouble()).toInt() + 1 >= 16) {
+                        cardNumber = numbers
+                        Log.i("Text", "Card Number is : $cardNumber")
+                    }
                 }
             }
         }
@@ -38,13 +40,14 @@ class CardNumberExtractor(private val context: Context) {
         return cardNumber
     }
 
-    fun checkForCardNumber(textBlock: Text.TextBlock) : Long{
-        val spaceFreeBlock: String = textBlock.text.replace("\\s".toRegex(), "")
+
+    private fun checkForCardNumber(text: String): Long {
+        val spaceFreeBlock: String = text.replace("\\s".toRegex(), "")
         try {
             return spaceFreeBlock.toLong()
         } catch (exception: NumberFormatException) {
 
         }
-        return - 1
+        return -1
     }
 }
