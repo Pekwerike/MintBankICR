@@ -1,5 +1,6 @@
 package com.pekwerike.mintbankicr.ui.screens
 
+import android.net.Uri
 import android.util.Size
 import android.widget.Toast
 import androidx.camera.core.*
@@ -13,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidViewBinding
@@ -20,8 +22,12 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import com.pekwerike.mintbankicr.MainActivity
 import com.pekwerike.mintbankicr.databinding.CameraPreviewLayoutBinding
+import com.pekwerike.mintbankicr.ocr.CardNumberExtractor
 import com.pekwerike.mintbankicr.ocr.CardReaderOCR
 import com.pekwerike.mintbankicr.viewmodel.MainActivityViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import java.io.File
 import java.util.concurrent.Executors
 
@@ -32,6 +38,7 @@ fun HomePageScreen(
     mainActivityViewModel: MainActivityViewModel
 ) {
     val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
     val shouldShowCameraPreview =
         mainActivityViewModel.shouldShowCameraPreview.observeAsState(false)
     Column(modifier = Modifier.fillMaxSize(1f)) {
@@ -40,22 +47,42 @@ fun HomePageScreen(
 
             AndroidViewBinding(
                 CameraPreviewLayoutBinding::inflate,
-                modifier = Modifier.fillMaxSize(1f)
+                modifier = Modifier
+                    .fillMaxSize(1f)
                     .clickable {
                         // take photo
                         val baseDirectory = File(context.getExternalFilesDir(null), "Images")
-                        if(!baseDirectory.exists()) baseDirectory.mkdirs()
+                        if (!baseDirectory.exists()) baseDirectory.mkdirs()
                         val imageFile = File(baseDirectory, "IMG${System.currentTimeMillis()}.jpg")
-                        val outputOptions = ImageCapture.OutputFileOptions.Builder(imageFile).build()
+                        val outputOptions = ImageCapture.OutputFileOptions
+                            .Builder(imageFile)
+                            .build()
                         mainActivityViewModel.imageCapture.value?.takePicture(
                             outputOptions,
-                            ContextCompat.getMainExecutor(context), object : ImageCapture.OnImageSavedCallback{
+                            ContextCompat.getMainExecutor(context),
+                            object : ImageCapture.OnImageSavedCallback {
                                 override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                                    Toast.makeText(context, "Image captured", Toast.LENGTH_SHORT).show()
+                                    Toast
+                                        .makeText(context, "Image captured", Toast.LENGTH_SHORT)
+                                        .show()
+                                    // start machine learning algorithm
+                                        coroutineScope.launch {
+                                            val cardNumber = async(Dispatchers.IO) {
+                                                CardNumberExtractor(context).getGetCardNumber(Uri.fromFile(imageFile))
+                                            }.await()
+                                            // pass card number to the viewmodel to make the network call
+                                        }
+
                                 }
 
                                 override fun onError(exception: ImageCaptureException) {
-                                    Toast.makeText(context, "Image capture failed", Toast.LENGTH_SHORT).show()
+                                    Toast
+                                        .makeText(
+                                            context,
+                                            "Image capture failed",
+                                            Toast.LENGTH_SHORT
+                                        )
+                                        .show()
                                 }
                             }
                         )
@@ -71,8 +98,10 @@ fun HomePageScreen(
                         .also {
                             it.setSurfaceProvider(this.cameraPreview.createSurfaceProvider())
                         }
-                   mainActivityViewModel.imageCaptureInstanceReady(ImageCapture.Builder()
-                        .build())
+                    mainActivityViewModel.imageCaptureInstanceReady(
+                        ImageCapture.Builder()
+                            .build()
+                    )
 
                     val imageAnalyzer = ImageAnalysis.Builder()
                         .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)

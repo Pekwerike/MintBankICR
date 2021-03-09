@@ -69,8 +69,5 @@ class CardReaderOCR(private val activityContext: Context) : ImageAnalysis.Analyz
             .addOnFailureListener {
                Log.i("Text gotten", "Recognition failed")
             }
-
-
     }
-
 }
