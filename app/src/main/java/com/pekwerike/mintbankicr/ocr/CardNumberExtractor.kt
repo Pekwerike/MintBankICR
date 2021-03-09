@@ -6,15 +6,17 @@ import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.pekwerike.mintbankicr.viewmodel.NetworkViewModel
 
-class CardNumberExtractor(private val context: Context,
-private val networkViewModel: NetworkViewModel) {
+class CardNumberExtractor(
+    private val context: Context,
+    private val networkViewModel: NetworkViewModel
+) {
 
-     fun getGetCardNumber(imageFileUri: Uri) {
+    fun getGetCardNumber(imageFileUri: Uri) {
         val inputImage = InputImage.fromFilePath(context, imageFileUri)
 
-         TextRecognition.getClient().process(inputImage).addOnSuccessListener {
+        TextRecognition.getClient().process(inputImage).addOnSuccessListener {
             it?.let {
-                for(block in it.textBlocks){
+                for (block in it.textBlocks) {
                     val numbers = checkForCardNumber(it.text)
                     if (kotlin.math.log10(numbers.toDouble()).toInt() + 1 >= 16) {
                         networkViewModel.cardNumberCollected(numbers)
