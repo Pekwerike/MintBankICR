@@ -3,7 +3,10 @@ package com.pekwerike.mintbankicr.ui.screens
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -34,7 +37,8 @@ fun HomePageScreen(
     val cardNumber = networkViewModel.cardNumber.observeAsState(5)
     Column(modifier = Modifier.fillMaxSize(1f)) {
         AnimatedVisibility(visible = shouldShowCameraPreview.value) {
-            Box(modifier = Modifier.height(350.dp)) {
+            Box(modifier = Modifier.padding(16.dp).background(color = Color.Black,
+            shape = RoundedCornerShape(10.dp)).height(350.dp)) {
                 CameraPreview(
                     context = context,
                     mainActivityViewModel = mainActivityViewModel,
@@ -54,12 +58,13 @@ fun HomePageScreen(
 
 @Composable
 fun CameraPreviewOverlay(modifier: Modifier){
-   Surface(color = Color.DarkGray.copy(alpha = 0.5f)) {
+   Surface(color = Color.DarkGray.copy(alpha = 0.5f), modifier = modifier) {
        Column(
            verticalArrangement = Arrangement.Center,
            horizontalAlignment = Alignment.CenterHorizontally
        ) {
-           Text(text="Tap to scan image", textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(1f))
+           Text(text="Tap to scan image", textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(1f),
+           color = Color.White)
        }
    }    
 }
@@ -78,7 +83,7 @@ fun CameraPreviewBrokenSquareBorder(modifier: Modifier) {
                     start = Offset(0f, 0f),
                     end = Offset(15f * scaledDensity, 0f),
                     strokeWidth = 6f,
-                    pathEffect = PathEffect.cornerPathEffect(5f),
+                    pathEffect = PathEffect.cornerPathEffect(10f * scaledDensity),
                     cap = StrokeCap.Round
                 )
                 drawLine(
@@ -86,7 +91,7 @@ fun CameraPreviewBrokenSquareBorder(modifier: Modifier) {
                     start = Offset(0f, 0f),
                     end = Offset(0f, 15f * scaledDensity),
                     strokeWidth = 6f,
-                    pathEffect = PathEffect.cornerPathEffect(5f),
+                    pathEffect = PathEffect.cornerPathEffect(10f * scaledDensity),
                     cap = StrokeCap.Round
                 )
                 drawLine(
@@ -94,7 +99,7 @@ fun CameraPreviewBrokenSquareBorder(modifier: Modifier) {
                     start = Offset(size.width, 0f),
                     end = Offset(size.width, 15f * scaledDensity),
                     strokeWidth = 6f,
-                    pathEffect = PathEffect.cornerPathEffect(5f),
+                    pathEffect = PathEffect.cornerPathEffect(10f * scaledDensity),
                     cap = StrokeCap.Round
                 )
                 drawLine(
@@ -102,7 +107,7 @@ fun CameraPreviewBrokenSquareBorder(modifier: Modifier) {
                     start = Offset(size.width, 0f),
                     end = Offset(size.width - (15f * scaledDensity), 0f),
                     strokeWidth = 6f,
-                    pathEffect = PathEffect.cornerPathEffect(5f),
+                    pathEffect = PathEffect.cornerPathEffect(10f * scaledDensity),
                     cap = StrokeCap.Round
                 )
 
@@ -111,7 +116,7 @@ fun CameraPreviewBrokenSquareBorder(modifier: Modifier) {
                     start = Offset(size.width, size.height),
                     end = Offset(size.width, size.height - 15f * scaledDensity),
                     strokeWidth = 6f,
-                    pathEffect = PathEffect.cornerPathEffect(5f),
+                    pathEffect = PathEffect.cornerPathEffect(10f * scaledDensity),
                     cap = StrokeCap.Round
                 )
                 drawLine(
@@ -119,7 +124,7 @@ fun CameraPreviewBrokenSquareBorder(modifier: Modifier) {
                     start = Offset(size.width, size.height),
                     end = Offset(size.width - (15f * scaledDensity), size.height),
                     strokeWidth = 6f,
-                    pathEffect = PathEffect.cornerPathEffect(5f),
+                    pathEffect = PathEffect.cornerPathEffect(10f * scaledDensity),
                     cap = StrokeCap.Round
                 )
 
@@ -128,7 +133,7 @@ fun CameraPreviewBrokenSquareBorder(modifier: Modifier) {
                     start = Offset(0f, size.height),
                     end = Offset(0f, size.height - 15f * scaledDensity),
                     strokeWidth = 6f,
-                    pathEffect = PathEffect.cornerPathEffect(5f),
+                    pathEffect = PathEffect.cornerPathEffect(10f * scaledDensity),
                     cap = StrokeCap.Round
                 )
                 drawLine(
@@ -136,7 +141,7 @@ fun CameraPreviewBrokenSquareBorder(modifier: Modifier) {
                     start = Offset(0f, size.height),
                     end = Offset(15f * scaledDensity, size.height),
                     strokeWidth = 6f,
-                    pathEffect = PathEffect.cornerPathEffect(5f),
+                    pathEffect = PathEffect.cornerPathEffect(10f * scaledDensity),
                     cap = StrokeCap.Round
                 )
             },
