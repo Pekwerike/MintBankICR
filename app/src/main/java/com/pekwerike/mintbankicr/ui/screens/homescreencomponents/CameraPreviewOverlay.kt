@@ -1,5 +1,6 @@
 package com.pekwerike.mintbankicr.ui.screens.homescreencomponents
 
+import android.widget.Toast
 import androidx.compose.animation.*
 
 import androidx.compose.foundation.clickable
@@ -48,10 +49,12 @@ fun CameraPreviewOverlay(
                 ScanStateMessage(
                     modifier = modifier,
                     message = "Tap to scan card",
-                    visibilityDuration = 3000
+                    visibilityDuration = 2000
                 )
             }
             is CardScanState.ScanSuccessful -> {
+                Toast.makeText(context, scanResult.extractedCardNumber.toString(), Toast.LENGTH_LONG)
+                    .show()
                 ScanStateMessage(
                     modifier = modifier,
                     message = scanResult.extractedCardNumber.toString(),
@@ -63,10 +66,10 @@ fun CameraPreviewOverlay(
                     modifier = modifier,
                     message = "Scan failed, make sure the scanner captures the card number clearly" +
                             " or input the number manually",
-                    visibilityDuration = 7000
+                    visibilityDuration = 6000
                 )
                 coroutineScope.launch(Dispatchers.Default) {
-                    delay(7000)
+                    delay(6000)
                     withContext(Dispatchers.Main) {
                         imageScanningInitiated(CardScanState.NoScan)
                     }

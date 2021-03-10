@@ -1,6 +1,7 @@
 package com.pekwerike.mintbankicr.ui.screens
 
 import android.content.Context
+import android.widget.Toast
 import androidx.compose.animation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -45,7 +46,8 @@ fun HomePageScreen(
                     modifier = Modifier.height(350.dp)
                 )
 
-                if (networkRequestState == NetworkResult.NoRequest) {
+                if (networkRequestState == NetworkResult.NoRequest ||
+                    networkRequestState ==  NetworkResult.Loading) {
                     CameraPreviewOverlay(
                         modifier = Modifier.fillMaxSize(1f),
                         scanResult = cardScanState,
@@ -53,8 +55,15 @@ fun HomePageScreen(
                         cardNumberExtracted = networkViewModel::cardNumberCollected,
                         mainActivityViewModel = mainActivityViewModel
                     )
-                } else {
+                } else if(cardScanState == CardScanState.NoScan){
                     CameraPreviewOverlayNetworkState(networkResult = networkRequestState)
+                    CameraPreviewOverlay(
+                        modifier = Modifier.fillMaxSize(1f),
+                        scanResult = cardScanState,
+                        imageScanningInitiated = networkViewModel::cardScanningStarted,
+                        cardNumberExtracted = networkViewModel::cardNumberCollected,
+                        mainActivityViewModel = mainActivityViewModel
+                    )
                 }
                 CameraPreviewBrokenSquareBorder(
                     modifier = Modifier.fillMaxSize(1f)
@@ -71,10 +80,29 @@ fun HomePageScreen(
 
 @Composable
 fun CameraPreviewOverlayNetworkState(networkResult: NetworkResult) {
-
+   val localContext = LocalContext.current
     when (networkResult) {
         is NetworkResult.Success -> {
-           // TODO Open Window dialog with user card details
+            Toast.makeText(localContext, "Result fetched", Toast.LENGTH_SHORT).show()
+           CardDetails(networkResult = networkResult)
+        }
+        NetworkResult.HttpError.HttpError400 -> {
+
+        }
+        NetworkResult.HttpError.HttpError404 -> {
+            Toast.makeText(localContext, "We don't support verve card", Toast.LENGTH_SHORT).show()
+        }
+        is NetworkResult.HttpError.UnknownError -> {
+            Toast.makeText(localContext, networkResult.errorCode, Toast.LENGTH_SHORT).show()
+        }
+        NetworkResult.Loading -> {
+
+        }
+        NetworkResult.NoInternetConnection -> {
+            Toast.makeText(localContext, "Alaye check your internet", Toast.LENGTH_SHORT).show()
+        }
+        NetworkResult.NoRequest -> {
+
         }
     }
 }
