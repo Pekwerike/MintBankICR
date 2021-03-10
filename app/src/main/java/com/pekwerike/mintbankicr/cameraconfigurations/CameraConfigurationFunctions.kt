@@ -21,7 +21,22 @@ import kotlinx.coroutines.withContext
 import java.io.File
 import kotlin.random.Random
 
+/* Overview
+    This file contains two functions
+    1. configureCameraLifecycleAndPreview extension function
+    2. takePhoto function
 
+    Functions description
+    1. configureCameraLifecycleAndPreview
+        The key responsibility of this function is to bind the camera_preview view in camera_preview_layout.xml
+        to a lifecycle aware component like a composition or activity
+
+       configureCameraLifecycleAndPreview function parameters
+       @param context -> The current ui scope on which the camera preview will be attached
+       @param mainActivityViewModel -> A viewModel class that stores an instance of ImageCapture class
+
+    2. takePhoto
+ */
 fun CameraPreviewLayoutBinding.configureCameraLifecycleAndPreview(
     context: Context,
     mainActivityViewModel: MainActivityViewModel
