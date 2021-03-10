@@ -18,22 +18,22 @@ import javax.inject.Inject
 @HiltViewModel
 class NetworkViewModel @Inject constructor(private val binListNetworkRepository: BinListNetworkRepository) :
     ViewModel() {
-    private var _cardScanResult = MutableLiveData<CardScanResult>()
-    val cardScanResult: LiveData<CardScanResult> = _cardScanResult
+    private var _cardScanResult = MutableLiveData<CardScanState>()
+    val cardScanResult: LiveData<CardScanState> = _cardScanResult
 
     private var _networkResult = MutableLiveData<NetworkResult>()
     val networkResult: LiveData<NetworkResult> = _networkResult
 
     fun cardNumberCollected(cardNumber: Long) {
         if (cardNumber != -1L) {
-            _cardScanResult.value = CardScanResult.ScanSuccessful(extractedCardNumber = cardNumber)
+            _cardScanResult.value = CardScanState.ScanSuccessful(extractedCardNumber = cardNumber)
             getCardDetails(cardNumber)
         }else {
-            _cardScanResult.value = CardScanResult.ScanUnsuccessful
+            _cardScanResult.value = CardScanState.ScanUnsuccessful
         }
     }
 
-    fun cardScanningStarted(scanning : CardScanResult
+    fun cardScanningStarted(scanning : CardScanState
     ){
         _cardScanResult.value = scanning
     }
@@ -45,13 +45,14 @@ class NetworkViewModel @Inject constructor(private val binListNetworkRepository:
                 binListNetworkRepository.getCardDetails(cardNumber)
             }.await()
             _networkResult.value = result
+            _cardScanResult.value = CardScanState.NoScan
         }
     }
 }
 
-sealed class CardScanResult{
-    data class ScanSuccessful(val extractedCardNumber: Long) : CardScanResult()
-    object ScanningInProgress : CardScanResult()
-    object ScanUnsuccessful : CardScanResult()
-    object NoScan : CardScanResult()
+sealed class CardScanState{
+    data class ScanSuccessful(val extractedCardNumber: Long) : CardScanState()
+    object ScanningInProgress : CardScanState()
+    object ScanUnsuccessful : CardScanState()
+    object NoScan : CardScanState()
 }

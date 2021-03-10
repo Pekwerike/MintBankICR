@@ -1,7 +1,6 @@
 package com.pekwerike.mintbankicr.cameraconfigurations
 
 import android.content.Context
-import android.net.Uri
 import android.util.DisplayMetrics
 import android.util.Size
 import android.widget.Toast
@@ -14,9 +13,8 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import com.pekwerike.mintbankicr.databinding.CameraPreviewLayoutBinding
 import com.pekwerike.mintbankicr.ocr.CardNumberExtractor
-import com.pekwerike.mintbankicr.viewmodel.CardScanResult
+import com.pekwerike.mintbankicr.viewmodel.CardScanState
 import com.pekwerike.mintbankicr.viewmodel.MainActivityViewModel
-import com.pekwerike.mintbankicr.viewmodel.NetworkViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -91,7 +89,7 @@ fun takePhoto(
     context: Context,
     mainActivityViewModel: MainActivityViewModel,
     coroutineScope: CoroutineScope,
-    imageScanningInitiated : (CardScanResult) -> Unit,
+    imageScanningInitiated : (CardScanState) -> Unit,
     cardNumberCollected: (Long) -> Unit
 ) {
     val baseDirectory = File(context.getExternalFilesDir(null), "Images")
@@ -105,7 +103,7 @@ fun takePhoto(
         ContextCompat.getMainExecutor(context),
         object : ImageCapture.OnImageSavedCallback {
             override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                imageScanningInitiated(CardScanResult.ScanningInProgress)
+                imageScanningInitiated(CardScanState.ScanningInProgress)
                 // start machine learning algorithm
                 coroutineScope.launch {
                     withContext(Dispatchers.IO) {

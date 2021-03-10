@@ -25,3 +25,7 @@ object BinListApi {
     }
 }
 
+class NewBinListApi(retrofit: Retrofit
+){
+
+}

@@ -20,7 +20,7 @@ fun CardScannerHelperText(modifier: Modifier) {
     CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
         val helperText = remember{
             buildAnnotatedString {
-                withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)){
+                withStyle(style = SpanStyle(fontWeight = Bold)){
                     append("Pro tip: ")
                 }
                 append("Place the front of your debit/credit card in front of the scanner and tap the scanner to begin scanning")

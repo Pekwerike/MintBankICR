@@ -36,7 +36,7 @@ class MainActivity : ComponentActivity() {
             MintBankICRTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                        HomePageScreen(networkViewModel, mainActivityViewModel)
+                        HomePageScreen( networkViewModel, mainActivityViewModel)
 
                 }
             }

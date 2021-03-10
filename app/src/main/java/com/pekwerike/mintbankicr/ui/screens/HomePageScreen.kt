@@ -1,22 +1,19 @@
 package com.pekwerike.mintbankicr.ui.screens
 
+import android.content.Context
 import androidx.compose.animation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.pekwerike.mintbankicr.ui.screens.homescreencomponents.*
-import com.pekwerike.mintbankicr.viewmodel.CardScanResult
+import com.pekwerike.mintbankicr.viewmodel.CardScanState
 import com.pekwerike.mintbankicr.viewmodel.MainActivityViewModel
 import com.pekwerike.mintbankicr.viewmodel.NetworkViewModel
 
@@ -26,11 +23,11 @@ fun HomePageScreen(
     networkViewModel: NetworkViewModel,
     mainActivityViewModel: MainActivityViewModel
 ) {
-    val context = LocalContext.current
+
     val coroutineScope = rememberCoroutineScope()
     val shouldShowCameraPreview =
         mainActivityViewModel.shouldShowCameraPreview.observeAsState(false)
-    val cardScanState by networkViewModel.cardScanResult.observeAsState(CardScanResult.NoScan)
+    val cardScanState by networkViewModel.cardScanResult.observeAsState(CardScanState.NoScan)
     Column(modifier = Modifier.fillMaxSize(1f)) {
         HomePageAppBar(modifier = Modifier.fillMaxWidth())
         AnimatedVisibility(visible = shouldShowCameraPreview.value) {
@@ -42,15 +39,16 @@ fun HomePageScreen(
             ) {
 
                 CameraPreview(
-                    context = context,
                     mainActivityViewModel = mainActivityViewModel,
-                    coroutineScope = coroutineScope,
-                    modifier = Modifier.height(350.dp),
-                    imageScanningInitiated = networkViewModel::cardScanningStarted,
-                    cardNumberCollected = networkViewModel::cardNumberCollected
-                )
+                    modifier = Modifier.height(350.dp))
 
-                CameraPreviewOverlay(modifier = Modifier.fillMaxSize(1f))
+                CameraPreviewOverlay(
+                    modifier = Modifier.fillMaxSize(1f),
+                    scanResult = cardScanState,
+                    imageScanningInitiated = networkViewModel::cardScanningStarted,
+                    cardNumberExtracted = networkViewModel::cardNumberCollected,
+                    mainActivityViewModel = mainActivityViewModel
+                )
                 CameraPreviewBrokenSquareBorder(
                     modifier = Modifier.fillMaxSize(1f)
                 )
