@@ -5,6 +5,7 @@ import com.squareup.moshi.Json
 data class CardDTO(
     val number: CardNumber?,
     val scheme: String?,
+    val brand: String?,
     val type: String?,
     val prepaid: Boolean?,
     val country: Country?,
@@ -26,6 +27,7 @@ data class Bank(
 data class Country(
     val numeric: String?,
     @Json(name = "alpha2") val alpha_two: String?,
+    val name : String?,
     val emoji: String?,
     val currency: String?,
     val latitude: Float?,
