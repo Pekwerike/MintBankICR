@@ -35,8 +35,6 @@ class CardNumberExtractor(
                     }
                 }
             }
-        }
-        withContext(Dispatchers.Main) {
             networkViewModel.cardNumberCollected(cardNumber)
         }
     }

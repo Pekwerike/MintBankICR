@@ -2,6 +2,8 @@ package com.pekwerike.mintbankicr.cameraconfigurations
 
 import android.content.Context
 import android.net.Uri
+import android.util.DisplayMetrics
+import android.util.Size
 import android.widget.Toast
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -19,6 +21,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
+import kotlin.math.roundToInt
 import kotlin.random.Random
 
 /* Overview
@@ -41,6 +44,7 @@ fun CameraPreviewLayoutBinding.configureCameraLifecycleAndPreview(
     context: Context,
     mainActivityViewModel: MainActivityViewModel
 ) {
+
     val cameraProviderFuture = ProcessCameraProvider.getInstance(context)
     cameraProviderFuture.addListener({
         val cameraProvider: ProcessCameraProvider =
@@ -52,6 +56,17 @@ fun CameraPreviewLayoutBinding.configureCameraLifecycleAndPreview(
             }
         mainActivityViewModel.imageCaptureInstanceReady(
             ImageCapture.Builder()
+                .setTargetResolution(
+                    Size(
+                        DisplayMetrics().also {
+                            this.cameraPreview.display.getRealMetrics(it)
+                        }.widthPixels,
+                        (DisplayMetrics().also {
+                            this.cameraPreview.display.getRealMetrics(it)
+                        }.heightPixels * 0.6f).roundToInt()
+                    )
+                )
+                .setCaptureMode(ImageCapture.CAPTURE_MODE_MAXIMIZE_QUALITY)
                 .build()
         )
         val cameraSelector = CameraSelector.Builder()
@@ -68,7 +83,7 @@ fun CameraPreviewLayoutBinding.configureCameraLifecycleAndPreview(
         } catch (exception: Exception) {
 
         }
-    }, ContextCompat.getMainExecutor(context))
+}, ContextCompat.getMainExecutor(context))
 }
 
 fun takePhoto(
@@ -100,6 +115,7 @@ fun takePhoto(
                 }
 
             }
+
             override fun onError(exception: ImageCaptureException) {
                 Toast
                     .makeText(

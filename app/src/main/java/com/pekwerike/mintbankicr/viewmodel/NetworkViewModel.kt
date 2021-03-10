@@ -25,7 +25,7 @@ class NetworkViewModel @Inject constructor(private val binListNetworkRepository:
     val networkResult: LiveData<NetworkResult> = _networkResult
 
     fun cardNumberCollected(cardNumber: Long) {
-        if (cardNumber >= 16) {
+        if (cardNumber != -1L) {
             _cardScanResult.value = CardScanResult.ScanSuccessful(extractedCardNumber = cardNumber)
             getCardDetails(cardNumber)
         }else {
