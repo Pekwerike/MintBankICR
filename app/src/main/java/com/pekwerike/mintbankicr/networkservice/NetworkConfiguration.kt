@@ -24,3 +24,4 @@ object BinListApi {
         retrofit.create(BinListApiService::class.java)
     }
 }
+

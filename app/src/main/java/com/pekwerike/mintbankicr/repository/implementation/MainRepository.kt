@@ -13,18 +13,23 @@ import javax.inject.Inject
 class MainRepository @Inject constructor() : BinListNetworkRepository {
 
     override suspend fun getCardDetails(cardNumber: Long): NetworkResult {
-        return BinListApi.binListApiService.getCardDetails(cardNumber = cardNumber)
-            .convertToNetworkResult()
+      return  try{
+            BinListApi.binListApiService.getCardDetails(cardNumber = cardNumber)
+                .convertToNetworkResult()
+        }catch (exception : Exception){
+            NetworkResult.NoInternetConnection
+        }
     }
 
-    fun Response<CardDTO>.convertToNetworkResult(): NetworkResult {
+    private fun Response<CardDTO>.convertToNetworkResult(): NetworkResult {
         if (isSuccessful) {
             return NetworkResult.Success(body()!!)
         }else{
            return when(code()){
                 // TODO, Messages for various http er
                 404 -> NetworkResult.HttpError.UnknownError(404, "Resource not found")
-               else -> NetworkResult.HttpError.UnknownError(123, "I no sabi")
+                400 -> NetworkResult.HttpError.UnknownError(400, "Sorry, Mint Bank don't presenting support this card")
+                else -> NetworkResult.HttpError.UnknownError(code(), message())
            }
         }
     }

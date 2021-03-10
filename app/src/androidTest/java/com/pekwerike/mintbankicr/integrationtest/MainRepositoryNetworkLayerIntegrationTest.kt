@@ -22,24 +22,26 @@ class MainRepositoryNetworkLayerIntegrationTest {
     }
 
     @Test
-    fun getCardDetailsTest() = runBlocking {
-        val networkResult = mainRepository.getCardDetails(
-            5559405046992892
-        )
-        when (networkResult) {
-            is NetworkResult.Success -> {
-                val cardDTO = networkResult.cardDTO
-                Log.i(
-                    "NetworkResult",
-                    "${cardDTO.country?.name} ${cardDTO.bank?.bankName} ${cardDTO.bank?.bankWebsite}"
-                )
-                assertEquals("debit", cardDTO.type)
+    fun getCardDetailsTest() {
+        runBlocking {
+            val networkResult = mainRepository.getCardDetails(
+                91
+            )
+            when (networkResult) {
+                is NetworkResult.Success -> {
+                    val cardDTO = networkResult.cardDTO
+                    Log.i(
+                        "NetworkResult",
+                        "${cardDTO.country?.name} ${cardDTO.bank?.bankName} ${cardDTO.bank?.bankWebsite}"
+                    )
+                    assertEquals("debit", cardDTO.type)
+                }
+                is NetworkResult.HttpError.UnknownError -> {
+                    Log.i("NetworkResult", networkResult.errorMessage)
+                }
+                NetworkResult.Loading -> Log.i("NetworkResult", "Loading")
+                NetworkResult.NoInternetConnection -> Log.i("NetworkResult", "Baba check your internet")
             }
-            is NetworkResult.HttpError.UnknownError -> {
-                Log.i("NetworkResult", networkResult.errorMessage)
-            }
-            NetworkResult.Loading -> Log.i("NetworkResult", "Loading")
         }
-
     }
 }

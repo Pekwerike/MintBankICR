@@ -88,9 +88,7 @@ fun takePhoto(
         ContextCompat.getMainExecutor(context),
         object : ImageCapture.OnImageSavedCallback {
             override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                Toast
-                    .makeText(context, "Image captured", Toast.LENGTH_SHORT)
-                    .show()
+                networkViewModel.cardScanningStarted()
                 // start machine learning algorithm
                 coroutineScope.launch {
                     withContext(Dispatchers.IO) {
