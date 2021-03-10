@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.pekwerike.mintbankicr.ui.screens.homescreencomponents.CameraPreview
 import com.pekwerike.mintbankicr.ui.screens.homescreencomponents.CameraPreviewBrokenSquareBorder
 import com.pekwerike.mintbankicr.ui.screens.homescreencomponents.CameraPreviewOverlay
+import com.pekwerike.mintbankicr.ui.screens.homescreencomponents.HomePageAppBar
 import com.pekwerike.mintbankicr.viewmodel.MainActivityViewModel
 import com.pekwerike.mintbankicr.viewmodel.NetworkViewModel
 
@@ -36,6 +37,7 @@ fun HomePageScreen(
         mainActivityViewModel.shouldShowCameraPreview.observeAsState(false)
     val cardNumber = networkViewModel.cardNumber.observeAsState(5)
     Column(modifier = Modifier.fillMaxSize(1f)) {
+        HomePageAppBar(modifier = Modifier.fillMaxWidth())
         AnimatedVisibility(visible = shouldShowCameraPreview.value) {
             Box(
                 modifier = Modifier

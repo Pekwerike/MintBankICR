@@ -1,4 +1,4 @@
-package com.pekwerike.mintbankicr.dto
+package com.pekwerike.mintbankicr.model
 
 import com.squareup.moshi.Json
 

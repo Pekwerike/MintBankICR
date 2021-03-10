@@ -1,6 +1,6 @@
 package com.pekwerike.mintbankicr.networkservice
 
-import com.pekwerike.mintbankicr.dto.CardDTO
+import com.pekwerike.mintbankicr.model.CardDTO
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Path

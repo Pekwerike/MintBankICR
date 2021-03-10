@@ -1,11 +1,10 @@
 package com.pekwerike.mintbankicr.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.pekwerike.mintbankicr.dto.CardDTO
+import com.pekwerike.mintbankicr.model.CardDTO
 import com.pekwerike.mintbankicr.repository.repositoryinterface.BinListNetworkRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
