@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import com.pekwerike.mintbankicr.databinding.CameraPreviewLayoutBinding
 import com.pekwerike.mintbankicr.ocr.CardNumberExtractor
+import com.pekwerike.mintbankicr.viewmodel.CardScanResult
 import com.pekwerike.mintbankicr.viewmodel.MainActivityViewModel
 import com.pekwerike.mintbankicr.viewmodel.NetworkViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -90,7 +91,8 @@ fun takePhoto(
     context: Context,
     mainActivityViewModel: MainActivityViewModel,
     coroutineScope: CoroutineScope,
-    networkViewModel: NetworkViewModel
+    imageScanningInitiated : (CardScanResult) -> Unit,
+    cardNumberCollected: (Long) -> Unit
 ) {
     val baseDirectory = File(context.getExternalFilesDir(null), "Images")
     if (!baseDirectory.exists()) baseDirectory.mkdirs()
@@ -103,13 +105,13 @@ fun takePhoto(
         ContextCompat.getMainExecutor(context),
         object : ImageCapture.OnImageSavedCallback {
             override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
-                networkViewModel.cardScanningStarted()
+                imageScanningInitiated(CardScanResult.ScanningInProgress)
                 // start machine learning algorithm
                 coroutineScope.launch {
                     withContext(Dispatchers.IO) {
                         CardNumberExtractor(
                             context,
-                            networkViewModel
+                            cardNumberCollected
                         ).getGetCardNumber(imageFile.absolutePath)
                     }
                 }

@@ -33,8 +33,9 @@ class NetworkViewModel @Inject constructor(private val binListNetworkRepository:
         }
     }
 
-    fun cardScanningStarted(){
-        _cardScanResult.value = CardScanResult.ScanningInProgress
+    fun cardScanningStarted(scanning : CardScanResult
+    ){
+        _cardScanResult.value = scanning
     }
 
     private fun getCardDetails(cardNumber: Long) {

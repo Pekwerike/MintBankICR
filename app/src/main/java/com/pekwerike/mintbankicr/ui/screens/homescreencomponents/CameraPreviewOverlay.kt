@@ -22,7 +22,7 @@ fun CameraPreviewOverlay(modifier: Modifier) {
     AnimatedVisibility(
         visible = false, initiallyVisible = true,
         exit = slideOutVertically(
-            animationSpec = tween(10000, 5000, LinearEasing)
+            animationSpec = tween(5000, 5000, LinearEasing)
         )
     ) {
         Surface(color = Color.DarkGray.copy(alpha = 0.5f), modifier = modifier) {

@@ -18,7 +18,7 @@ import java.io.FileOutputStream
 
 class CardNumberExtractor(
     private val context: Context,
-    private val networkViewModel: NetworkViewModel
+    private val cardNumberCollected: (Long) -> Unit
 ) {
 
     suspend fun getGetCardNumber(imageFilePath: String) {
@@ -35,7 +35,7 @@ class CardNumberExtractor(
                     }
                 }
             }
-            networkViewModel.cardNumberCollected(cardNumber)
+            cardNumberCollected(cardNumber)
         }
     }
 
