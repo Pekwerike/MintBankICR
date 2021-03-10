@@ -12,7 +12,7 @@ import org.junit.Test
     Integration test between the MainRepository and the  Network layer, this test is highly
     dependent on internet connectivity
  */
-class MainRepositoryTest {
+class MainRepositoryNetworkLayerIntegrationTest {
     private lateinit var mainRepository: MainRepository
 
     @Before

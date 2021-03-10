@@ -21,8 +21,10 @@ import com.pekwerike.mintbankicr.ui.screens.HomePageScreen
 import com.pekwerike.mintbankicr.ui.theme.MintBankICRTheme
 import com.pekwerike.mintbankicr.viewmodel.MainActivityViewModel
 import com.pekwerike.mintbankicr.viewmodel.NetworkViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val mainActivityViewModel by viewModels<MainActivityViewModel>()
     private val networkViewModel by viewModels<NetworkViewModel>()

@@ -11,12 +11,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /*
 **/
 
 @HiltViewModel
-class NetworkViewModel(private val binListNetworkRepository: BinListNetworkRepository) :
+class NetworkViewModel @Inject constructor(private val binListNetworkRepository: BinListNetworkRepository) :
     ViewModel() {
     private var _cardNumber = MutableLiveData<Long>()
     val cardNumber: LiveData<Long> = _cardNumber
