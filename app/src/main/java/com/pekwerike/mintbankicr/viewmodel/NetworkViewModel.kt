@@ -33,8 +33,7 @@ class NetworkViewModel @Inject constructor(private val binListNetworkRepository:
         }
     }
 
-    fun cardScanningStarted(scanning : CardScanState
-    ){
+    fun cardScanningStarted(scanning : CardScanState){
         _cardScanResult.value = scanning
     }
 
