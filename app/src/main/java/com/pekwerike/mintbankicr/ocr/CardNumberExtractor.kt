@@ -20,19 +20,21 @@ class CardNumberExtractor(
 ) {
 
     fun getGetCardNumber(imageFilePath: String) {
+        var cardNumber: Long = -1
         val inputImage = InputImage.fromFilePath(context, Uri.fromFile(File(imageFilePath)))
         TextRecognition.getClient().process(inputImage).addOnSuccessListener {
             it?.let {
                 for (block in it.textBlocks) {
                     val numbers = CardOcrUtilsFunction.convertStringToLong(block.text)
                     if (kotlin.math.log10(numbers.toDouble()).toInt() + 1 >= 16) {
-                        networkViewModel.cardNumberCollected(numbers)
+                        cardNumber = numbers
                         deleteCacheFile(imageFilePath)
                         break
                     }
                 }
             }
         }
+        networkViewModel.cardNumberCollected(cardNumber)
     }
 
     private fun deleteCacheFile(filePath: String) {

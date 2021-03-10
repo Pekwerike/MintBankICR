@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pekwerike.mintbankicr.model.CardDTO
+import com.pekwerike.mintbankicr.model.NetworkResult
 import com.pekwerike.mintbankicr.repository.repositoryinterface.BinListNetworkRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -21,20 +22,23 @@ class NetworkViewModel @Inject constructor(private val binListNetworkRepository:
     private var _cardNumber = MutableLiveData<Long>()
     val cardNumber: LiveData<Long> = _cardNumber
 
-    private var _cardDetails = MutableLiveData<CardDTO>()
-    val cardDetails : LiveData<CardDTO> = _cardDetails
+    private var _networkResult = MutableLiveData<NetworkResult>()
+    val networkResult: LiveData<NetworkResult> = _networkResult
 
     fun cardNumberCollected(cardNumber: Long) {
-        _cardNumber.value = cardNumber
-        getCardDetails(_cardNumber.value!!)
+        if (cardNumber >= 16) {
+            _cardNumber.value = cardNumber
+            getCardDetails(_cardNumber.value!!)
+        }
     }
 
     private fun getCardDetails(cardNumber: Long) {
+        _networkResult.value = NetworkResult.Loading
         viewModelScope.launch {
-            val cardDetails: CardDTO = async(Dispatchers.IO) {
+            val result: NetworkResult = async(Dispatchers.IO) {
                 binListNetworkRepository.getCardDetails(cardNumber)
             }.await()
-            _cardDetails.value = cardDetails
+            _networkResult.value = result
         }
     }
 }

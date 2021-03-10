@@ -1,6 +1,7 @@
 package com.pekwerike.mintbankicr.integrationtest
 
 import android.util.Log
+import com.pekwerike.mintbankicr.model.NetworkResult
 import com.pekwerike.mintbankicr.repository.implementation.MainRepository
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.runBlocking
@@ -22,10 +23,23 @@ class MainRepositoryNetworkLayerIntegrationTest {
 
     @Test
     fun getCardDetailsTest() = runBlocking {
-        val (number, scheme, brand,  type, prepaid, country, bank) = mainRepository.getCardDetails(
+        val networkResult = mainRepository.getCardDetails(
             5559405046992892
         )
-        Log.i("NetworkResult", "${country?.name} ${bank?.bankName} ${bank?.bankWebsite}")
-        assertEquals("debit", type)
+        when (networkResult) {
+            is NetworkResult.Success -> {
+                val cardDTO = networkResult.cardDTO
+                Log.i(
+                    "NetworkResult",
+                    "${cardDTO.country?.name} ${cardDTO.bank?.bankName} ${cardDTO.bank?.bankWebsite}"
+                )
+                assertEquals("debit", cardDTO.type)
+            }
+            is NetworkResult.HttpError.UnknownError -> {
+                Log.i("NetworkResult", networkResult.errorMessage)
+            }
+            NetworkResult.Loading -> Log.i("NetworkResult", "Loading")
+        }
+
     }
 }
