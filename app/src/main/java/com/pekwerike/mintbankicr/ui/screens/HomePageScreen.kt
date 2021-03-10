@@ -74,7 +74,7 @@ fun CameraPreviewOverlay(modifier: Modifier) {
     AnimatedVisibility(
         visible = false, initiallyVisible = true,
         exit = slideOutVertically(
-            animationSpec = tween(10000, 10000, LinearEasing)
+            animationSpec = tween(10000, 5000, LinearEasing)
         )
     ) {
         Surface(color = Color.DarkGray.copy(alpha = 0.5f), modifier = modifier) {
@@ -83,7 +83,7 @@ fun CameraPreviewOverlay(modifier: Modifier) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Tap to scan image", textAlign = TextAlign.Center, modifier = Modifier
+                    text = "Tap to scan card", textAlign = TextAlign.Center, modifier = Modifier
                         .fillMaxWidth(1f),
                     color = Color.White
                 )

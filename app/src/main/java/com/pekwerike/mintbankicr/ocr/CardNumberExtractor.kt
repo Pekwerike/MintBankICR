@@ -9,6 +9,7 @@ import android.util.Log
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
+import com.pekwerike.mintbankicr.utils.CardOcrUtilsFunction
 import com.pekwerike.mintbankicr.viewmodel.NetworkViewModel
 import java.io.File
 import java.io.FileOutputStream
@@ -23,7 +24,7 @@ class CardNumberExtractor(
         TextRecognition.getClient().process(inputImage).addOnSuccessListener {
             it?.let {
                 for (block in it.textBlocks) {
-                    val numbers = checkForCardNumber(block.text)
+                    val numbers = CardOcrUtilsFunction.convertStringToLong(block.text)
                     if (kotlin.math.log10(numbers.toDouble()).toInt() + 1 >= 16) {
                         networkViewModel.cardNumberCollected(numbers)
                         deleteCacheFile(imageFilePath)
@@ -38,13 +39,4 @@ class CardNumberExtractor(
         File(filePath).delete()
     }
 
-    private fun checkForCardNumber(text: String): Long {
-        val spaceFreeBlock: String = text.replace("\\s".toRegex(), "")
-        try {
-            return spaceFreeBlock.toLong()
-        } catch (exception: NumberFormatException) {
-
-        }
-        return -1
-    }
 }

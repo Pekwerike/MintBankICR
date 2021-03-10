@@ -66,6 +66,11 @@ dependencies {
     implementation "androidx.camera:camera-view:1.0.0-alpha14"
 
     // ML Kit text recognition dependency
-    implementation 'com.google.android.gms:play-services-mlkit-text-recognition:16.0.0'
+    implementation "com.google.android.gms:play-services-mlkit-text-recognition:$ml_kit_version"
+
+    // retrofit dependency
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
+    implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
 
 }
