@@ -21,7 +21,7 @@ class NetworkViewModel @Inject constructor(private val binListNetworkRepository:
     private var _cardScanResult = MutableLiveData<CardScanState>()
     val cardScanResult: LiveData<CardScanState> = _cardScanResult
 
-    private var _networkResult = MutableLiveData<NetworkResult>()
+    private var _networkResult = MutableLiveData<NetworkResult>(NetworkResult.NoRequest)
     val networkResult: LiveData<NetworkResult> = _networkResult
 
     fun cardNumberCollected(cardNumber: Long) {

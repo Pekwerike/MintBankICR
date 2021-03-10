@@ -17,7 +17,7 @@ fun HomePageAppBar(modifier: Modifier) {
             Text(
                 text = "Mint Digital Bank ICR", textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.h6,
-                modifier = Modifier.fillMaxWidth()
+                modifier = modifier
             )
         },
         backgroundColor = MaterialTheme.colors.surface,

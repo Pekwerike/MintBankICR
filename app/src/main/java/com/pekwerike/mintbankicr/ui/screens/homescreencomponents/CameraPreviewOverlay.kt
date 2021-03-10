@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.pekwerike.mintbankicr.cameraconfigurations.takePhoto
+import com.pekwerike.mintbankicr.model.NetworkResult
 import com.pekwerike.mintbankicr.viewmodel.CardScanState
 import com.pekwerike.mintbankicr.viewmodel.MainActivityViewModel
 import kotlinx.coroutines.Dispatchers
