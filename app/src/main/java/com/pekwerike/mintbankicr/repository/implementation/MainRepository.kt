@@ -27,8 +27,8 @@ class MainRepository @Inject constructor() : BinListNetworkRepository {
         }else{
            return when(code()){
                 // TODO, Messages for various http er
-                404 -> NetworkResult.HttpError.UnknownError(404, "Resource not found")
-                400 -> NetworkResult.HttpError.UnknownError(400, "Sorry, Mint Bank don't presenting support this card")
+                404 -> NetworkResult.HttpError.HttpError404
+                400 -> NetworkResult.HttpError.HttpError400
                 else -> NetworkResult.HttpError.UnknownError(code(), message())
            }
         }

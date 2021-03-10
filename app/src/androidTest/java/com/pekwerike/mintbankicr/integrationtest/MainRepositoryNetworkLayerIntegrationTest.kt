@@ -13,6 +13,7 @@ import org.junit.Test
     Integration test between the MainRepository and the  Network layer, this test is highly
     dependent on internet connectivity
  */
+private const val NETWORK_RESULT_TAG = "NetworkResult"
 class MainRepositoryNetworkLayerIntegrationTest {
     private lateinit var mainRepository: MainRepository
 
@@ -39,8 +40,11 @@ class MainRepositoryNetworkLayerIntegrationTest {
                 is NetworkResult.HttpError.UnknownError -> {
                     Log.i("NetworkResult", networkResult.errorMessage)
                 }
-                NetworkResult.Loading -> Log.i("NetworkResult", "Loading")
-                NetworkResult.NoInternetConnection -> Log.i("NetworkResult", "Baba check your internet")
+                NetworkResult.Loading -> Log.i(NETWORK_RESULT_TAG, "Loading")
+                NetworkResult.NoInternetConnection -> Log.i(NETWORK_RESULT_TAG, "Baba check your internet")
+                NetworkResult.HttpError.HttpError400 -> Log.i(NETWORK_RESULT_TAG, "Bad request omo")
+                NetworkResult.HttpError.HttpError404 -> Log.i(NETWORK_RESULT_TAG, "Lmaoo, error 404")
+                NetworkResult.NoRequest -> TODO()
             }
         }
     }
