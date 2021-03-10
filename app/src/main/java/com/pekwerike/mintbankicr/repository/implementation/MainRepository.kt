@@ -4,11 +4,15 @@ import com.pekwerike.mintbankicr.dto.CardDTO
 import com.pekwerike.mintbankicr.networkservice.BinListApi
 import com.pekwerike.mintbankicr.networkservice.BinListApiService
 import com.pekwerike.mintbankicr.repository.repositoryinterface.BinListNetworkRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class MainRepository() : BinListNetworkRepository {
 
-    override fun getCardDetails(cardNumber: Long): CardDTO {
-        return BinListApi.binListApiService.getCardDetails(cardNumber = cardNumber)
+    override suspend fun getCardDetails(cardNumber: Long): CardDTO {
+       return withContext(Dispatchers.IO) {
+            BinListApi.binListApiService.getCardDetails(cardNumber = cardNumber)
+        }
     }
 }
 

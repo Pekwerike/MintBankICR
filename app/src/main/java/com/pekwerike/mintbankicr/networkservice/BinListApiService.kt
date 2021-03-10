@@ -9,5 +9,5 @@ interface BinListApiService {
 
     @Headers("Accept-Version: 3")
     @GET("{card_number}")
-    fun getCardDetails(@Path("card_number") cardNumber: Long) : CardDTO
+    suspend fun getCardDetails(@Path("card_number") cardNumber: Long) : CardDTO
 }

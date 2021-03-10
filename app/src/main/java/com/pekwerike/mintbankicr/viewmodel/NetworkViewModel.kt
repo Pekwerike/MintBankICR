@@ -11,7 +11,6 @@ class NetworkViewModel : ViewModel() {
 
     fun cardNumberCollected(cardNumber: Long) {
         _cardNumber.value = cardNumber
-        Log.i("Text", cardNumber.toString())
     }
 
 }
