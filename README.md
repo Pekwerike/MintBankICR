@@ -3,9 +3,7 @@ Mint Bank Intelligent Card Reader (MintBankICR) utilizes cutting-edge machine le
 
 ## How it works?
 MintBankICR employs Google’s machine learning expertise on mobile to perform text recognition on the scanned card. Then MintBankICR extracts the card number and performs a 
-network request to https://binlist.net/ to get information about the card. 
-
-[Watch video preview](https://www.youtube.com/watch?v=VQSc8kc2JLw)
+network request to https://binlist.net/ to get information about the card. [Watch video preview](https://www.youtube.com/watch?v=VQSc8kc2JLw)
 
 ## Architecture pattern
 The app uses Google's recommended Model-View-ViewModel pattern with unidirectional data flow. 
