@@ -21,15 +21,15 @@ binListApi: BinListApi) : BinListNetworkRepository {
     }
 
     private fun Response<CardDTO>.convertToNetworkResult(): NetworkResult {
-        if (isSuccessful) {
-            return NetworkResult.Success(body()!!)
+        return if (isSuccessful) {
+            NetworkResult.Success(body()!!)
         }else{
-           return when(code()){
+            when(code()){
                 // TODO, Messages for various http error
                 404 -> NetworkResult.HttpError.HttpError404
                 400 -> NetworkResult.HttpError.HttpError400
                 else -> NetworkResult.HttpError.UnknownError(code(), message())
-           }
+            }
         }
     }
 }
