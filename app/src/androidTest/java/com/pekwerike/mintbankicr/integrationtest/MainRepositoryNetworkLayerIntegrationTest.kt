@@ -63,7 +63,9 @@ class MainRepositoryNetworkLayerIntegrationTest {
                 NetworkResult.NoInternetConnection -> Log.i(NETWORK_RESULT_TAG, "Baba check your internet")
                 NetworkResult.HttpError.HttpError400 -> Log.i(NETWORK_RESULT_TAG, "Bad request omo")
                 NetworkResult.HttpError.HttpError404 -> Log.i(NETWORK_RESULT_TAG, "Lmaoo, error 404")
-                NetworkResult.NoRequest -> TODO()
+                NetworkResult.NoRequest -> {
+
+                }
             }
         }
     }
