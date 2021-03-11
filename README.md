@@ -66,4 +66,4 @@ The model layer consits of the card details representation and the network resul
 ## TODO
 1. Improve code documentation
 2. More tests cases to be written
-3. Optimize card scanning experience by utilizing CameraX image analysis feature
+3. Optimize card scanning experience by utilizing androidX CameraX image analysis feature
