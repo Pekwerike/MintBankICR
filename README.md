@@ -1,5 +1,5 @@
 # MintBankICR
-Mint Bank Intelligent Card Reader (MintBankICR) utilizes cutting edge machine learning algorithms to perform optical character recognition to read out personal information from a user credit card.
+Mint Bank Intelligent Card Reader (MintBankICR) utilizes cutting edge machine learning algorithms to perform optical character recognition to read out personal information from a user credit/debit card.
 
 ## How it works?
 MintBankICR utilizes Google’s machine learning expertise no mobile to perform text recognition on the scanned card. Then MintBankICR extracts the card number and performs a 
