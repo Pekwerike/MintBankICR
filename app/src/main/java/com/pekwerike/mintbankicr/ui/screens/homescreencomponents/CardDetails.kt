@@ -109,7 +109,7 @@ fun ErrorFetchingCardDetails(
             ) {
                 Icon(
                     imageVector = errorIcon, contentDescription = "",
-                    modifier = Modifier.padding(16.dp) .size(150.dp),
+                    modifier = Modifier.padding(16.dp) .size(120.dp),
                     tint = errorIconTint
                 )
                 CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {

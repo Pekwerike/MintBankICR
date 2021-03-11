@@ -2,6 +2,7 @@ package com.pekwerike.mintbankicr.ocr
 
 import android.content.Context
 import android.net.Uri
+import android.util.Log
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.pekwerike.mintbankicr.utils.deleteCacheFile
@@ -19,8 +20,10 @@ class CardCharacterExtractor(
         TextRecognition.getClient().process(inputImage).addOnSuccessListener {
             it?.let {
                 for (block in it.textBlocks) {
+                    Log.i("Scanned", block.text)
                     val numbers = block.text.stripStringSpacesAndConvertStringToLong()
-                    if (kotlin.math.log10(numbers.toDouble()).toInt() + 1 >= 16) {
+                    Log.i("Scanned", numbers.toString())
+                    if (kotlin.math.log10(numbers.toDouble()).toInt() + 1 >= 13) {
                         cardNumber = numbers
                         deleteCacheFile(imageFilePath)
                         break

@@ -4,10 +4,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.CreditCard
-import androidx.compose.material.icons.rounded.CreditCardOff
-import androidx.compose.material.icons.rounded.SignalCellularConnectedNoInternet0Bar
-import androidx.compose.material.icons.rounded.WifiTetheringErrorRounded
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -39,7 +36,7 @@ fun NetworkResultMessage(networkRequestState: NetworkResult) {
                 .padding(16.dp)
                 .fillMaxSize(),
             errorMessage = "Service unavailable",
-            errorIcon = Icons.Rounded.WifiTetheringErrorRounded,
+            errorIcon = Icons.Rounded.CloudOff,
             errorIconTint = Color.Blue.copy(0.5f)
         )
         NetworkResult.Loading -> ErrorFetchingCardDetails(
@@ -56,7 +53,7 @@ fun NetworkResultMessage(networkRequestState: NetworkResult) {
                 .fillMaxSize(),
             errorMessage = "No internet connection to fetch card details, connect to the internet " +
                     "and try again",
-            errorIcon = Icons.Rounded.SignalCellularConnectedNoInternet0Bar,
+            errorIcon = Icons.Rounded.PublicOff,
             errorIconTint = Color.Blue.copy(0.5f)
         )
         NetworkResult.NoRequest -> {

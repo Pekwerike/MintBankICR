@@ -5,7 +5,7 @@ This function returns the numeric equivalent of the converted string or -1 if th
 fails
  */
 fun String.stripStringSpacesAndConvertStringToLong() : Long{
-    val spaceFreeString = replace("\\s", "")
+    val spaceFreeString = replace("\\s".toRegex(), "")
     try {
         return spaceFreeString.toLong()
     }catch (numberFormatException : NumberFormatException){
