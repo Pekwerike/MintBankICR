@@ -10,7 +10,6 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
@@ -19,7 +18,6 @@ import com.pekwerike.mintbankicr.model.NetworkResult
 import com.pekwerike.mintbankicr.ui.screens.homescreencomponents.*
 import com.pekwerike.mintbankicr.viewmodel.MainActivityViewModel
 import com.pekwerike.mintbankicr.viewmodel.NetworkViewModel
-import java.util.*
 
 @ExperimentalAnimationApi
 @Composable
@@ -28,14 +26,13 @@ fun HomePageScreen(
     mainActivityViewModel: MainActivityViewModel
 ) {
 
-    val coroutineScope = rememberCoroutineScope()
-    val shouldShowCameraPreview =
-        mainActivityViewModel.shouldShowCameraPreview.observeAsState(false)
+    val shouldShowCameraPreview by
+    mainActivityViewModel.shouldShowCameraPreview.observeAsState(false)
     val cardScanState by networkViewModel.cardScanResult.observeAsState(CardScanState.NoScan)
     val networkRequestState by networkViewModel.networkResult.observeAsState(NetworkResult.NoRequest)
     Column(modifier = Modifier.fillMaxSize(1f)) {
         HomePageAppBar(modifier = Modifier.fillMaxWidth())
-        AnimatedVisibility(visible = shouldShowCameraPreview.value) {
+        AnimatedVisibility(visible = shouldShowCameraPreview) {
             Box(
                 modifier = Modifier
                     .padding(16.dp)
