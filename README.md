@@ -1,8 +1,8 @@
 # MintBankICR
-Mint Bank Intelligent Card Reader (MintBankICR) utilizes cutting edge machine learning algorithms to perform optical character recognition to read out personal information from a user credit/debit card.
+Mint Bank Intelligent Card Reader (MintBankICR) utilizes cutting edge machine learning algorithms to perform optical character recognition to extract out meta data from a user credit/debit card.
 
 ## How it works?
-MintBankICR utilizes Google’s machine learning expertise no mobile to perform text recognition on the scanned card. Then MintBankICR extracts the card number and performs a 
+MintBankICR employs Google’s machine learning expertise on mobile to perform text recognition on the scanned card. Then MintBankICR extracts the card number and performs a 
 network request to https://binlist.net/ to get information about the card.
 
 ## Architecture pattern
@@ -56,3 +56,8 @@ The model layer consits of the card details representation and the network resul
 4. [Jetpack Compose](https://developer.android.com/jetpack/compose) - Jetpack Compose is Android’s modern toolkit for building native UI. It simplifies and accelerates UI development on Android.
 5. [ML Kit](https://developers.google.com/ml-kit) - ML Kit brings Google’s machine learning expertise to mobile developers in a powerful and easy-to-use package.
 6. [CameraX](https://developer.android.com/jetpack/androidx/releases/camera) - CameraX is a Jetpack support library, built to help make camera app development easier.
+
+##TODO
+1. Improved code documentation
+2. More tests cases to be written
+3. Complete utilization of Hilt to manage dependencies from external libraries like Retrofit and Moshi
