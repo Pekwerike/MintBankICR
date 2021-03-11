@@ -1,10 +1,11 @@
-![MintBankICRHomescreenDark](https://user-images.githubusercontent.com/43956851/110859787-43546900-82bc-11eb-9ad2-a882a515f580.png=250x250)
 # MintBankICR
 Mint Bank Intelligent Card Reader (MintBankICR) utilizes cutting-edge machine learning algorithm to perform optical character recognition to extract out metadata from a user credit/debit card.
 
 ## How it works?
 MintBankICR employs Google’s machine learning expertise on mobile to perform text recognition on the scanned card. Then MintBankICR extracts the card number and performs a 
-network request to https://binlist.net/ to get information about the card.
+network request to https://binlist.net/ to get information about the card. 
+
+[Watch video preview](https://www.youtube.com/watch?v=VQSc8kc2JLw)
 
 ## Architecture pattern
 The app uses Google's recommended Model-View-ViewModel pattern with unidirectional data flow. 
@@ -22,6 +23,9 @@ The app uses Google's recommended Model-View-ViewModel pattern with unidirection
 
 * ### UI layer 
 MintBankICR's user interface was built using Android’s modern toolkit for building native UI, Jetpack Compose + Android's traditional established xml view system.
+
+  <img src="https://user-images.githubusercontent.com/43956851/110859787-43546900-82bc-11eb-9ad2-a882a515f580.png" width="320" height="620"> <img src="https://user-images.githubusercontent.com/43956851/110861661-c080dd80-82be-11eb-8ef1-057a7a6484cf.png" width="320" height="620">
+
 
 * ### Network Layer 
 MintBankICR uses Retrofit to make a GET HTTP request to https://lookup.binlist.net/, then parses the response body into Kotlin object with Moshi. 
@@ -41,6 +45,8 @@ The app main repository serves as an interface between the view models and the n
 Google's ML Kit was exploited for it's on device machine learning capacity, while Androidx CameraX library was configured to capture input images for ML Kit.
 
 * ### ViewModel
+
+
 MiltBankICR view models holds all the UI states in the app to act as a single source of truth for state changes whilst serving as a data channel to the repository layer.
 
 * ### Concurreny 
