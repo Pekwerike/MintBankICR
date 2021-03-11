@@ -57,7 +57,7 @@ The model layer consits of the card details representation and the network resul
 5. [ML Kit](https://developers.google.com/ml-kit) - ML Kit brings Google’s machine learning expertise to mobile developers in a powerful and easy-to-use package.
 6. [CameraX](https://developer.android.com/jetpack/androidx/releases/camera) - CameraX is a Jetpack support library, built to help make camera app development easier.
 
-##TODO
+## TODO
 1. Improved code documentation
 2. More tests cases to be written
 3. Complete utilization of Hilt to manage dependencies from external libraries like Retrofit and Moshi
