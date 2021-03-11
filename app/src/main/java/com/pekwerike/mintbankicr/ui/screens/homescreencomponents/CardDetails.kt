@@ -7,10 +7,13 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -43,8 +46,10 @@ fun CardMetaData(cardDTO: CardDTO, modifier: Modifier) {
                 ),
                 paddingTop = 5
             )
-            CardMetaDataSingleTextRow(label = "Type", value = cardDTO.type ?: "Unknown Type",
-            paddingTop = 5)
+            CardMetaDataSingleTextRow(
+                label = "Type", value = cardDTO.type ?: "Unknown Type",
+                paddingTop = 5
+            )
             CardMetaDataSingleTextRow(
                 label = "Bank",
                 value = cardDTO.bank?.bankName ?: "Unknown Bank",
@@ -81,7 +86,10 @@ fun CardMetaDataSingleTextRow(label: String, value: String, paddingTop: Int) {
 
 @ExperimentalAnimationApi
 @Composable
-fun ErrorFetchingCardDetails(modifier: Modifier, errorMessage: String) {
+fun ErrorFetchingCardDetails(
+    modifier: Modifier, errorMessage: String, errorIcon: ImageVector,
+    errorIconTint: Color
+) {
     AnimatedVisibility(
         visible = true, initiallyVisible = false, enter = fadeIn(
             initialAlpha = 0f, animationSpec = tween(2500, easing = LinearEasing)
@@ -99,6 +107,11 @@ fun ErrorFetchingCardDetails(modifier: Modifier, errorMessage: String) {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
+                Icon(
+                    imageVector = errorIcon, contentDescription = "",
+                    modifier = Modifier.size(200.dp),
+                    tint = errorIconTint
+                )
                 CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
                     Text(
                         text = errorMessage, textAlign = TextAlign.Center,

@@ -11,6 +11,11 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.CreditCard
+import androidx.compose.material.icons.rounded.CreditCardOff
+import androidx.compose.material.icons.rounded.SignalCellularConnectedNoInternet0Bar
+import androidx.compose.material.icons.rounded.WifiTetheringErrorRounded
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.livedata.observeAsState
@@ -19,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -75,57 +81,21 @@ fun HomePageScreen(
                 )
             }
         }
-        Column(modifier = Modifier.verticalScroll(state = rememberScrollState())
-            .fillMaxSize()) {
+        Column(
+            modifier = Modifier
+                .verticalScroll(state = rememberScrollState())
+                .fillMaxSize()
+        ) {
             CardScannerHelperText(
                 modifier = Modifier
                     .padding(16.dp)
                     .fillMaxWidth()
             )
-            when (networkRequestState) {
-                NetworkResult.HttpError.HttpError400 -> ErrorFetchingCardDetails(
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxSize(),
-                    errorMessage = "Sorry, Mint Digital Bank doesn't support this card brand"
-                )
-                NetworkResult.HttpError.HttpError404 -> ErrorFetchingCardDetails(
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxSize(),
-                    errorMessage = "Sorry, Mint Digital Bank doesn't support this card brand"
-                )
-                is NetworkResult.HttpError.UnknownError -> ErrorFetchingCardDetails(
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxSize(),
-                    errorMessage = "Service unavailable"
-                )
-                NetworkResult.Loading -> ErrorFetchingCardDetails(modifier = Modifier
-                    .padding(16.dp)
-                    .fillMaxSize(), errorMessage = "Fetching card details...")
-                NetworkResult.NoInternetConnection -> ErrorFetchingCardDetails(
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxSize(),
-                    errorMessage = "No internet connection to fetch card details, connect to the internet " +
-                            "and try again"
-                )
-                NetworkResult.NoRequest -> {
-
-                }
-                is NetworkResult.Success -> {
-                    CardMetaData(
-                        cardDTO = (networkRequestState as NetworkResult.Success).cardDTO,
-                        modifier = Modifier
-                            .padding(16.dp)
-                            .fillMaxSize()
-                    )
-                }
-            }
+            NetworkResultMessage(networkRequestState = networkRequestState)
         }
     }
 }
+
 
 
 
