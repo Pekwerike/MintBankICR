@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.pekwerike.mintbankicr.model.CardScanState
 import com.pekwerike.mintbankicr.model.NetworkResult
 import com.pekwerike.mintbankicr.repository.repositoryinterface.BinListNetworkRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -49,9 +50,3 @@ class NetworkViewModel @Inject constructor(private val binListNetworkRepository:
     }
 }
 
-sealed class CardScanState{
-    data class ScanSuccessful(val extractedCardNumber: Long) : CardScanState()
-    object ScanningInProgress : CardScanState()
-    object ScanUnsuccessful : CardScanState()
-    object NoScan : CardScanState()
-}

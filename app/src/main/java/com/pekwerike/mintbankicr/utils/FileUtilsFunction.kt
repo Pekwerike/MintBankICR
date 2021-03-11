@@ -1,5 +1,9 @@
 package com.pekwerike.mintbankicr.utils
 
-object FileUtilsFunction {
+import java.io.File
 
+
+fun deleteCacheFile(filePath: String) {
+    val cacheFile = File(filePath)
+    if(!cacheFile.exists()) cacheFile.delete()
 }

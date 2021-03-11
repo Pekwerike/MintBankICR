@@ -17,7 +17,7 @@ import javax.inject.Singleton
 const val BASE_URL = "https://lookup.binlist.net"
 @InstallIn(ViewModelComponent::class)
 @Module
-class NetworkDependencyInjectionModule {
+abstract class NetworkDependencyInjectionModule {
 
     @Provides
     @Singleton

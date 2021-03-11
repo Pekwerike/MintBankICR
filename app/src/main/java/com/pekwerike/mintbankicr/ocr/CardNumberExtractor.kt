@@ -1,28 +1,19 @@
 package com.pekwerike.mintbankicr.ocr
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Path
 import android.net.Uri
-import android.util.Log
-import androidx.compose.ui.graphics.painter.BitmapPainter
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
-import com.pekwerike.mintbankicr.utils.CardOcrUtilsFunction
+import com.pekwerike.mintbankicr.utils.deleteCacheFile
 import com.pekwerike.mintbankicr.utils.stripStringSpacesAndConvertStringToLong
-import com.pekwerike.mintbankicr.viewmodel.NetworkViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import java.io.File
-import java.io.FileOutputStream
 
 class CardNumberExtractor(
     private val context: Context,
     private val cardNumberCollected: (Long) -> Unit
 ) {
 
-    suspend fun getGetCardNumber(imageFilePath: String) {
+    fun getGetCardNumber(imageFilePath: String) {
         var cardNumber: Long = -1
         val inputImage = InputImage.fromFilePath(context, Uri.fromFile(File(imageFilePath)))
         TextRecognition.getClient().process(inputImage).addOnSuccessListener {
@@ -39,9 +30,4 @@ class CardNumberExtractor(
             cardNumberCollected(cardNumber)
         }
     }
-
-    private fun deleteCacheFile(filePath: String) {
-        File(filePath).delete()
-    }
-
 }
