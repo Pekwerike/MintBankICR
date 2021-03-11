@@ -25,7 +25,7 @@ fun ScanStateMessage(modifier: Modifier, message: String, visibilityDuration: In
         visible = false, initiallyVisible = true,
         exit = fadeOut(
             animationSpec = tween(
-                durationMillis = 5000,
+                durationMillis = 4000,
                 delayMillis = visibilityDuration, easing = LinearEasing
             )
         )

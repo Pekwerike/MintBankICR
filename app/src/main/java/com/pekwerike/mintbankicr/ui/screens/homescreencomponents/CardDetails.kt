@@ -30,7 +30,7 @@ import java.util.*
 fun CardMetaData(cardDTO: CardDTO, modifier: Modifier) {
     AnimatedVisibility(
         visible = true, initiallyVisible = false, enter = fadeIn(
-            initialAlpha = 0f, animationSpec = tween(2000, easing = LinearEasing)
+            initialAlpha = 0f, animationSpec = tween(1500, easing = LinearEasing)
         )
     ) {
         Column(modifier = modifier) {
@@ -92,7 +92,7 @@ fun ErrorFetchingCardDetails(
 ) {
     AnimatedVisibility(
         visible = true, initiallyVisible = false, enter = fadeIn(
-            initialAlpha = 0f, animationSpec = tween(2500, easing = LinearEasing)
+            initialAlpha = 0f, animationSpec = tween(1500, easing = LinearEasing)
         )
     ) {
         Column(modifier = modifier) {
@@ -109,7 +109,7 @@ fun ErrorFetchingCardDetails(
             ) {
                 Icon(
                     imageVector = errorIcon, contentDescription = "",
-                    modifier = Modifier.size(200.dp),
+                    modifier = Modifier.padding(16.dp) .size(150.dp),
                     tint = errorIconTint
                 )
                 CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {

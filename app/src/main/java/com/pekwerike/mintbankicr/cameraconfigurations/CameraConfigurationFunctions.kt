@@ -13,7 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import com.pekwerike.mintbankicr.databinding.CameraPreviewLayoutBinding
 import com.pekwerike.mintbankicr.model.CardScanState
-import com.pekwerike.mintbankicr.ocr.CardNumberExtractor
+import com.pekwerike.mintbankicr.ocr.CardCharacterExtractor
 import com.pekwerike.mintbankicr.viewmodel.MainActivityViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -107,7 +107,7 @@ fun takePhoto(
                 // start machine learning algorithm
                 coroutineScope.launch {
                     withContext(Dispatchers.IO) {
-                        CardNumberExtractor(
+                        CardCharacterExtractor(
                             context,
                             cardNumberCollected
                         ).getGetCardNumber(imageFile.absolutePath)

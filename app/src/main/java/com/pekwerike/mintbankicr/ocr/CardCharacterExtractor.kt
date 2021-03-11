@@ -8,7 +8,7 @@ import com.pekwerike.mintbankicr.utils.deleteCacheFile
 import com.pekwerike.mintbankicr.utils.stripStringSpacesAndConvertStringToLong
 import java.io.File
 
-class CardNumberExtractor(
+class CardCharacterExtractor(
     private val context: Context,
     private val cardNumberCollected: (Long) -> Unit
 ) {

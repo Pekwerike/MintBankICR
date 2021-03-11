@@ -48,12 +48,10 @@ fun CameraPreviewOverlay(
                 ScanStateMessage(
                     modifier = modifier,
                     message = "Tap to scan card",
-                    visibilityDuration = 2000
+                    visibilityDuration = 1500
                 )
             }
             is CardScanState.ScanSuccessful -> {
-                Toast.makeText(context, scanResult.extractedCardNumber.toString(), Toast.LENGTH_LONG)
-                    .show()
                 ScanStateMessage(
                     modifier = modifier,
                     message = scanResult.extractedCardNumber.toString(),
@@ -65,10 +63,10 @@ fun CameraPreviewOverlay(
                     modifier = modifier,
                     message = "Scan failed, make sure the scanner captures the card number clearly" +
                             " or input the number manually",
-                    visibilityDuration = 6000
+                    visibilityDuration = 5000
                 )
                 coroutineScope.launch(Dispatchers.Default) {
-                    delay(6000)
+                    delay(5000)
                     withContext(Dispatchers.Main) {
                         imageScanningInitiated(CardScanState.NoScan)
                     }
