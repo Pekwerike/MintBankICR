@@ -56,8 +56,8 @@ The model layer consits of the card details representation and the network resul
 4. [Jetpack Compose](https://developer.android.com/jetpack/compose) - Jetpack Compose is Android’s modern toolkit for building native UI. It simplifies and accelerates UI development on Android.
 5. [ML Kit](https://developers.google.com/ml-kit) - ML Kit brings Google’s machine learning expertise to mobile developers in a powerful and easy-to-use package.
 6. [CameraX](https://developer.android.com/jetpack/androidx/releases/camera) - CameraX is a Jetpack support library, built to help make camera app development easier.
+7. [JUnit4](https://junit.org/junit4/) - JUnit is a simple framework for writing local unit tests
 
 ## TODO
-1. Improved code documentation
+1. Improve code documentation
 2. More tests cases to be written
-3. Complete utilization of Hilt to manage dependencies from external libraries like Retrofit and Moshi
