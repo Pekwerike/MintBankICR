@@ -15,8 +15,10 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
+import androidx.compose.ui.text.font.FontWeight.Companion.SemiBold
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.unit.dp
 import com.pekwerike.mintbankicr.model.CardDTO
 import java.util.*
 
@@ -25,50 +27,56 @@ import java.util.*
 fun CardMetaData(cardDTO: CardDTO, modifier: Modifier) {
     AnimatedVisibility(
         visible = true, initiallyVisible = false, enter = fadeIn(
-            initialAlpha = 0f, animationSpec = tween(5000, easing = LinearEasing)
+            initialAlpha = 0f, animationSpec = tween(2500, easing = LinearEasing)
         )
     ) {
         Column(modifier = modifier) {
             Text(
                 text = "Card Details", style = MaterialTheme.typography.h6,
-                fontWeight = FontWeight.SemiBold
+                fontWeight = SemiBold,
+                modifier = Modifier.padding(bottom = 5.dp)
             )
             Divider()
             CardMetaDataSingleTextRow(
-                label = "Brand", value = (cardDTO.brand ?: "Unknown Brand").toUpperCase(
+                label = "Brand", value = (cardDTO.scheme ?: "Unknown Brand").toUpperCase(
                     Locale.ROOT
-                )
+                ),
+                paddingTop = 5
             )
-            CardMetaDataSingleTextRow(label = "Type", value = cardDTO.type ?: "Unknown Type")
+            CardMetaDataSingleTextRow(label = "Type", value = cardDTO.type ?: "Unknown Type",
+            paddingTop = 5)
             CardMetaDataSingleTextRow(
                 label = "Bank",
-                value = cardDTO.bank?.bankName ?: "Unknown Bank"
+                value = cardDTO.bank?.bankName ?: "Unknown Bank",
+                paddingTop = 5
             )
             CardMetaDataSingleTextRow(
                 label = "Website",
-                value = cardDTO.bank?.bankWebsite ?: "site undefined"
+                value = cardDTO.bank?.bankWebsite ?: "site undefined",
+                paddingTop = 5
             )
-            Divider()
             CardMetaDataSingleTextRow(
                 label = "Country",
-                value = cardDTO.country?.name + cardDTO.country?.emoji
+                value = cardDTO.country?.name + cardDTO.country?.emoji,
+                paddingTop = 5
             )
             CardMetaDataSingleTextRow(
                 label = "Currency",
-                value = cardDTO.country?.currency ?: "Undefined"
+                value = cardDTO.country?.currency ?: "Undefined",
+                paddingTop = 5
             )
         }
     }
 }
 
 @Composable
-fun CardMetaDataSingleTextRow(label: String, value: String) {
+fun CardMetaDataSingleTextRow(label: String, value: String, paddingTop: Int) {
     Text(text = buildAnnotatedString {
         withStyle(style = SpanStyle(fontWeight = Bold)) {
             append("$label: ")
         }
         append(value)
-    }, style = MaterialTheme.typography.body2)
+    }, style = MaterialTheme.typography.body2, modifier = Modifier.padding(top = paddingTop.dp))
 }
 
 @ExperimentalAnimationApi
@@ -76,24 +84,27 @@ fun CardMetaDataSingleTextRow(label: String, value: String) {
 fun ErrorFetchingCardDetails(modifier: Modifier, errorMessage: String) {
     AnimatedVisibility(
         visible = true, initiallyVisible = false, enter = fadeIn(
-            initialAlpha = 0f, animationSpec = tween(5000, easing = LinearEasing)
+            initialAlpha = 0f, animationSpec = tween(2500, easing = LinearEasing)
         )
     ) {
         Column(modifier = modifier) {
             Text(
                 text = "Card Details", style = MaterialTheme.typography.h6,
-                fontWeight = FontWeight.SemiBold
+                fontWeight = SemiBold,
+                modifier = Modifier.padding(bottom = 5.dp)
             )
             Divider()
             Column(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxSize(1f),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
                 CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
                     Text(
                         text = errorMessage, textAlign = TextAlign.Center,
-                        style = MaterialTheme.typography.caption
+                        style = MaterialTheme.typography.caption,
+                        fontWeight = SemiBold,
+                        modifier = Modifier.padding(16.dp)
                     )
                 }
             }

@@ -5,8 +5,11 @@ import android.widget.Toast
 import androidx.compose.animation.*
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -72,7 +75,8 @@ fun HomePageScreen(
                 )
             }
         }
-        Column {
+        Column(modifier = Modifier.verticalScroll(state = rememberScrollState())
+            .fillMaxSize()) {
             CardScannerHelperText(
                 modifier = Modifier
                     .padding(16.dp)
@@ -82,28 +86,28 @@ fun HomePageScreen(
                 NetworkResult.HttpError.HttpError400 -> ErrorFetchingCardDetails(
                     modifier = Modifier
                         .padding(16.dp)
-                        .fillMaxWidth(),
+                        .fillMaxSize(),
                     errorMessage = "Sorry, Mint Digital Bank doesn't support this card brand"
                 )
                 NetworkResult.HttpError.HttpError404 -> ErrorFetchingCardDetails(
                     modifier = Modifier
                         .padding(16.dp)
-                        .fillMaxWidth(),
+                        .fillMaxSize(),
                     errorMessage = "Sorry, Mint Digital Bank doesn't support this card brand"
                 )
                 is NetworkResult.HttpError.UnknownError -> ErrorFetchingCardDetails(
                     modifier = Modifier
                         .padding(16.dp)
-                        .fillMaxWidth(),
+                        .fillMaxSize(),
                     errorMessage = "Service unavailable"
                 )
                 NetworkResult.Loading -> ErrorFetchingCardDetails(modifier = Modifier
                     .padding(16.dp)
-                    .fillMaxWidth(), errorMessage = "Fetching card details...")
+                    .fillMaxSize(), errorMessage = "Fetching card details...")
                 NetworkResult.NoInternetConnection -> ErrorFetchingCardDetails(
                     modifier = Modifier
                         .padding(16.dp)
-                        .fillMaxWidth(),
+                        .fillMaxSize(),
                     errorMessage = "No internet connection to fetch card details, connect to the internet " +
                             "and try again"
                 )
@@ -115,7 +119,7 @@ fun HomePageScreen(
                         cardDTO = (networkRequestState as NetworkResult.Success).cardDTO,
                         modifier = Modifier
                             .padding(16.dp)
-                            .fillMaxWidth()
+                            .fillMaxSize()
                     )
                 }
             }
