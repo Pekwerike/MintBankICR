@@ -27,7 +27,7 @@ import java.util.*
 fun CardMetaData(cardDTO: CardDTO, modifier: Modifier) {
     AnimatedVisibility(
         visible = true, initiallyVisible = false, enter = fadeIn(
-            initialAlpha = 0f, animationSpec = tween(2500, easing = LinearEasing)
+            initialAlpha = 0f, animationSpec = tween(2000, easing = LinearEasing)
         )
     ) {
         Column(modifier = modifier) {

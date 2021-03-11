@@ -78,4 +78,7 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
 
+    // jetpack compose material icons
+    implementation "androidx.compose.material:material-icons-extended:$compose_version"
+
 }
