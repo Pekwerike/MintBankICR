@@ -35,7 +35,7 @@ class MainRepositoryNetworkLayerIntegrationTest {
     lateinit var mainRepository: MainRepository
 
     @Before
-    fun setUp(){
+    fun setUp() {
         hiltRule.inject()
     }
 
@@ -60,9 +60,14 @@ class MainRepositoryNetworkLayerIntegrationTest {
                 NetworkResult.Loading -> {
                     assertTrue(true)
                 }
-                NetworkResult.NoInternetConnection -> Log.i(NETWORK_RESULT_TAG, "Baba check your internet")
-                NetworkResult.HttpError.HttpError400 -> Log.i(NETWORK_RESULT_TAG, "Bad request omo")
-                NetworkResult.HttpError.HttpError404 -> Log.i(NETWORK_RESULT_TAG, "Lmaoo, error 404")
+                NetworkResult.NoInternetConnection -> {
+
+                }
+                NetworkResult.HttpError.HttpError400 -> {
+
+                }
+                NetworkResult.HttpError.HttpError404 -> {
+                }
                 NetworkResult.NoRequest -> {
 
                 }
