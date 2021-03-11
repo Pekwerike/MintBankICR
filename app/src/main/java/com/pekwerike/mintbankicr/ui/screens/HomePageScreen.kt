@@ -3,21 +3,24 @@ package com.pekwerike.mintbankicr.ui.screens
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.animation.*
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.pekwerike.mintbankicr.model.Bank
@@ -56,100 +59,71 @@ fun HomePageScreen(
                     modifier = Modifier.height(350.dp)
                 )
 
-                if (networkRequestState == NetworkResult.NoRequest ||
-                    networkRequestState ==  NetworkResult.Loading) {
-                    CameraPreviewOverlay(
-                        modifier = Modifier.fillMaxSize(1f),
-                        scanResult = cardScanState,
-                        imageScanningInitiated = networkViewModel::cardScanningStarted,
-                        cardNumberExtracted = networkViewModel::cardNumberCollected,
-                        mainActivityViewModel = mainActivityViewModel
-                    )
-                } else if(cardScanState == CardScanState.NoScan){
-                    CameraPreviewOverlayNetworkState(networkResult = networkRequestState)
-                    CameraPreviewOverlay(
-                        modifier = Modifier.fillMaxSize(1f),
-                        scanResult = cardScanState,
-                        imageScanningInitiated = networkViewModel::cardScanningStarted,
-                        cardNumberExtracted = networkViewModel::cardNumberCollected,
-                        mainActivityViewModel = mainActivityViewModel
-                    )
-                }
+                CameraPreviewOverlay(
+                    modifier = Modifier.fillMaxSize(1f),
+                    scanResult = cardScanState,
+                    imageScanningInitiated = networkViewModel::cardScanningStarted,
+                    cardNumberExtracted = networkViewModel::cardNumberCollected,
+                    mainActivityViewModel = mainActivityViewModel
+                )
+
                 CameraPreviewBrokenSquareBorder(
                     modifier = Modifier.fillMaxSize(1f)
                 )
             }
         }
+        Column {
+            CardScannerHelperText(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth()
+            )
+            when (networkRequestState) {
+                NetworkResult.HttpError.HttpError400 -> ErrorFetchingCardDetails(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .fillMaxWidth(),
+                    errorMessage = "Sorry, Mint Digital Bank doesn't support this card brand"
+                )
+                NetworkResult.HttpError.HttpError404 -> ErrorFetchingCardDetails(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .fillMaxWidth(),
+                    errorMessage = "Sorry, Mint Digital Bank doesn't support this card brand"
+                )
+                is NetworkResult.HttpError.UnknownError -> ErrorFetchingCardDetails(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .fillMaxWidth(),
+                    errorMessage = "Service unavailable"
+                )
+                NetworkResult.Loading -> ErrorFetchingCardDetails(modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth(), errorMessage = "Fetching card details...")
+                NetworkResult.NoInternetConnection -> ErrorFetchingCardDetails(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .fillMaxWidth(),
+                    errorMessage = "No internet connection to fetch card details, connect to the internet " +
+                            "and try again"
+                )
+                NetworkResult.NoRequest -> {
 
-        CardScannerHelperText(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth()
-        )
-    }
-}
-@Composable
-fun CardMetaData(cardDTO: CardDTO){
-    Column {
-        Text(text = "Card Details", style = MaterialTheme.typography.h6,
-        fontWeight = FontWeight.SemiBold)
-        Divider()
-        CardMetaDataSingleTextRow(label = "Brand", value = (cardDTO.brand?: "Unknown Brand").toUpperCase(
-            Locale.ROOT))
-        CardMetaDataSingleTextRow(label = "Type", value = cardDTO.type?: "Unknown Type")
-        CardMetaDataSingleTextRow(label = "Bank", value = cardDTO.bank?.bankName?: "Unknown Bank")
-        CardMetaDataSingleTextRow(
-            label = "Website",
-            value = cardDTO.bank?.bankWebsite ?: "site undefined"
-        )
-        Divider()
-        CardMetaDataSingleTextRow(
-            label = "Country",
-            value = cardDTO.country?.name + cardDTO.country?.emoji
-        )
-        CardMetaDataSingleTextRow(label = "Currency", value = cardDTO.country?.currency?:"Undefined")
-
-    }
-}
-
-@Composable
-fun CardMetaDataSingleTextRow(label: String, value: String){
-    Text(text = buildAnnotatedString {
-        withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)){
-            append("$label: ")
-        }
-        append(value)
-    })
-}
-
-@Composable
-fun CameraPreviewOverlayNetworkState(networkResult: NetworkResult) {
-   val localContext = LocalContext.current
-    when (networkResult) {
-        is NetworkResult.Success -> {
-            Toast.makeText(localContext, "Result fetched", Toast.LENGTH_SHORT).show()
-           CardDetails(networkResult = networkResult)
-        }
-        NetworkResult.HttpError.HttpError400 -> {
-
-        }
-        NetworkResult.HttpError.HttpError404 -> {
-            Toast.makeText(localContext, "We don't support verve card", Toast.LENGTH_SHORT).show()
-        }
-        is NetworkResult.HttpError.UnknownError -> {
-            Toast.makeText(localContext, networkResult.errorCode, Toast.LENGTH_SHORT).show()
-        }
-        NetworkResult.Loading -> {
-
-        }
-        NetworkResult.NoInternetConnection -> {
-            Toast.makeText(localContext, "Alaye check your internet", Toast.LENGTH_SHORT).show()
-        }
-        NetworkResult.NoRequest -> {
-
+                }
+                is NetworkResult.Success -> {
+                    CardMetaData(
+                        cardDTO = (networkRequestState as NetworkResult.Success).cardDTO,
+                        modifier = Modifier
+                            .padding(16.dp)
+                            .fillMaxWidth()
+                    )
+                }
+            }
         }
     }
 }
+
+
 
 
 

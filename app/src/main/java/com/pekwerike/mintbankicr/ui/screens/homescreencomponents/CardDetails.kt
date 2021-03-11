@@ -1,64 +1,101 @@
 package com.pekwerike.mintbankicr.ui.screens.homescreencomponents
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Card
-import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
-import com.pekwerike.mintbankicr.model.NetworkResult
+import androidx.compose.ui.text.withStyle
+import com.pekwerike.mintbankicr.model.CardDTO
 import java.util.*
 
+@ExperimentalAnimationApi
 @Composable
-fun CardDetails(networkResult: NetworkResult.Success) {
-    Dialog(onDismissRequest = {
+fun CardMetaData(cardDTO: CardDTO, modifier: Modifier) {
+    AnimatedVisibility(
+        visible = true, initiallyVisible = false, enter = fadeIn(
+            initialAlpha = 0f, animationSpec = tween(5000, easing = LinearEasing)
+        )
+    ) {
+        Column(modifier = modifier) {
+            Text(
+                text = "Card Details", style = MaterialTheme.typography.h6,
+                fontWeight = FontWeight.SemiBold
+            )
+            Divider()
+            CardMetaDataSingleTextRow(
+                label = "Brand", value = (cardDTO.brand ?: "Unknown Brand").toUpperCase(
+                    Locale.ROOT
+                )
+            )
+            CardMetaDataSingleTextRow(label = "Type", value = cardDTO.type ?: "Unknown Type")
+            CardMetaDataSingleTextRow(
+                label = "Bank",
+                value = cardDTO.bank?.bankName ?: "Unknown Bank"
+            )
+            CardMetaDataSingleTextRow(
+                label = "Website",
+                value = cardDTO.bank?.bankWebsite ?: "site undefined"
+            )
+            Divider()
+            CardMetaDataSingleTextRow(
+                label = "Country",
+                value = cardDTO.country?.name + cardDTO.country?.emoji
+            )
+            CardMetaDataSingleTextRow(
+                label = "Currency",
+                value = cardDTO.country?.currency ?: "Undefined"
+            )
+        }
+    }
+}
 
-    }) {
-        Card(modifier = Modifier
-            .width(300.dp)
-            .padding(8.dp)) {
-            Column(modifier = Modifier
-                .fillMaxWidth(1f)
-                .padding(8.dp)) {
-                Text(
-                    text = (networkResult.cardDTO.scheme ?: "Unknown brand").toUpperCase(Locale.ROOT),
-                    textAlign = TextAlign.Center, style = MaterialTheme.typography.subtitle1,
-                    fontWeight = Bold,
-                    modifier = Modifier
-                        .fillMaxWidth(1f)
-                        .padding(8.dp)
-                )
-                Text(
-                    text = networkResult.cardDTO.brand ?: "Unknown type",
-                    textAlign = TextAlign.Center,  modifier = Modifier
-                            .fillMaxWidth(1f)
-                )
-                Divider(thickness = 1.5.dp)
-                Text(text = "Bank: ${networkResult.cardDTO.bank?.bankName}",
-                    modifier = Modifier
-                        .fillMaxWidth(1f)
-                        .padding(start =8.dp, end = 8.dp, top = 8.dp))
-                Text(text = "Website: ${networkResult.cardDTO.bank?.bankWebsite}",
-                    modifier = Modifier
-                        .fillMaxWidth(1f)
-                        .padding(start =8.dp, end = 8.dp, top = 8.dp))
-                Text(text = "Phone: ${networkResult.cardDTO.bank?.bankPhone}",
-                    modifier = Modifier
-                        .fillMaxWidth(1f)
-                        .padding(start =8.dp, end = 8.dp, top = 8.dp))
-                Divider()
-                Text(text = "Country: ${networkResult.cardDTO.country?.name}${networkResult.cardDTO.country?.emoji}",
-                    modifier = Modifier
-                        .fillMaxWidth(1f)
-                        .padding(start =8.dp, end = 8.dp, top = 8.dp))
-                Text(text = "Currency: ${networkResult.cardDTO.country?.currency}",   modifier = Modifier
-                    .fillMaxWidth(1f)
-                    .padding(start =8.dp, end = 8.dp, top = 8.dp))
+@Composable
+fun CardMetaDataSingleTextRow(label: String, value: String) {
+    Text(text = buildAnnotatedString {
+        withStyle(style = SpanStyle(fontWeight = Bold)) {
+            append("$label: ")
+        }
+        append(value)
+    }, style = MaterialTheme.typography.body2)
+}
+
+@ExperimentalAnimationApi
+@Composable
+fun ErrorFetchingCardDetails(modifier: Modifier, errorMessage: String) {
+    AnimatedVisibility(
+        visible = true, initiallyVisible = false, enter = fadeIn(
+            initialAlpha = 0f, animationSpec = tween(5000, easing = LinearEasing)
+        )
+    ) {
+        Column(modifier = modifier) {
+            Text(
+                text = "Card Details", style = MaterialTheme.typography.h6,
+                fontWeight = FontWeight.SemiBold
+            )
+            Divider()
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
+                    Text(
+                        text = errorMessage, textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.caption
+                    )
+                }
             }
         }
     }

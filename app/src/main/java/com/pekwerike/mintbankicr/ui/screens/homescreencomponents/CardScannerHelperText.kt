@@ -33,6 +33,6 @@ fun CardScannerHelperText(modifier: Modifier) {
             }
         }
         Text(text = helperText,
-        modifier = modifier, style = MaterialTheme.typography.body2)
+        modifier = modifier, style = MaterialTheme.typography.caption)
     }
 }
