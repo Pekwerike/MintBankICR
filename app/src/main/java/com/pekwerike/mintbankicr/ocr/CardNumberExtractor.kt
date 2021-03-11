@@ -10,6 +10,7 @@ import androidx.compose.ui.graphics.painter.BitmapPainter
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.text.TextRecognition
 import com.pekwerike.mintbankicr.utils.CardOcrUtilsFunction
+import com.pekwerike.mintbankicr.utils.stripStringSpacesAndConvertStringToLong
 import com.pekwerike.mintbankicr.viewmodel.NetworkViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -27,7 +28,7 @@ class CardNumberExtractor(
         TextRecognition.getClient().process(inputImage).addOnSuccessListener {
             it?.let {
                 for (block in it.textBlocks) {
-                    val numbers = CardOcrUtilsFunction.convertStringToLong(block.text)
+                    val numbers = block.text.stripStringSpacesAndConvertStringToLong()
                     if (kotlin.math.log10(numbers.toDouble()).toInt() + 1 >= 16) {
                         cardNumber = numbers
                         deleteCacheFile(imageFilePath)
