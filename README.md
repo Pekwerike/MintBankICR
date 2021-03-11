@@ -34,7 +34,7 @@ MintBankICR test layer contains local unit tests, instrumented unit tests, integ
 More test cases still need to be covered.
 
 * ### Dependency Injection
-The dependency injection layer was completely managed by Hilt. This layer provides dependencies to the various layers of the app including the UI.
+The dependency injection layer was completely managed by Hilt. This layer provides dependencies to the various layers of the app including the Test layer.
 
 * ### Repository
 The app main repository serves as an interface between the view models and the network layer.
