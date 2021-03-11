@@ -37,7 +37,7 @@ The dependency injection layer was completely managed by Hilt. This layer provid
 The app main repository serves as an interface between the view models and the network layer.
 
 * ### Optical Character Recognition + Camera Configuration
-Google's ML Kit exploited for it's on device machine learning capacity, while Androidx CameraX library was configured to capture input images for ML Kit 
+Google's ML Kit was exploited for it's on device machine learning capacity, while Androidx CameraX library was configured to capture input images for ML Kit 
 
 * ### ViewModel
 MiltBankICR view models holds all the UI states in the app to act as a single source of truth for state changes whilst serving as a data channel to the repository layer
