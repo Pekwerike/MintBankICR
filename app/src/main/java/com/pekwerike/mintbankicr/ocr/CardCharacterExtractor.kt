@@ -20,9 +20,7 @@ class CardCharacterExtractor(
         TextRecognition.getClient().process(inputImage).addOnSuccessListener {
             it?.let {
                 for (block in it.textBlocks) {
-                    Log.i("Scanned", block.text)
                     val numbers = block.text.stripStringSpacesAndConvertStringToLong()
-                    Log.i("Scanned", numbers.toString())
                     if (kotlin.math.log10(numbers.toDouble()).toInt() + 1 >= 13) {
                         cardNumber = numbers
                         deleteCacheFile(imageFilePath)
