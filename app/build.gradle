@@ -77,8 +77,13 @@ dependencies {
     // hilt dependency
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
+    // hilt instrumented tests.
+    androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_version"
+    // ...with Kotlin.
+    kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_version"
 
     // jetpack compose material icons
     implementation "androidx.compose.material:material-icons-extended:$compose_version"
+
 
 }
