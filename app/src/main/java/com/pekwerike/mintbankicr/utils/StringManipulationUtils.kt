@@ -4,13 +4,12 @@ package com.pekwerike.mintbankicr.utils
 This function returns the numeric equivalent of the converted string or -1 if the conversion
 fails
  */
-fun String.stripStringSpacesAndConvertStringToLong() : Long{
+fun String.stripStringSpacesAndConvertStringToLong(): Long {
     val spaceFreeString = replace("\\s".toRegex(), "")
-    try {
-        return spaceFreeString.toLong()
-    }catch (numberFormatException : NumberFormatException){
-
+    return try {
+        spaceFreeString.toLong()
+    } catch (numberFormatException: NumberFormatException) {
+        -1
     }
-    return -1
 }
 
