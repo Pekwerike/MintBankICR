@@ -1,5 +1,5 @@
 # MintBankICR
-Mint Bank Intelligent Card Reader (MintBankICR) utilizes cutting edge machine learning algorithms to perform optical character recognition to extract out meta data from a user credit/debit card.
+Mint Bank Intelligent Card Reader (MintBankICR) utilizes cutting-edge machine learning algorithms to perform optical character recognition to extract out metadata from a user credit/debit card.
 
 ## How it works?
 MintBankICR employs Google’s machine learning expertise on mobile to perform text recognition on the scanned card. Then MintBankICR extracts the card number and performs a 
@@ -51,7 +51,7 @@ The model layer consits of the card details representation and the network resul
 
 ## Open Source Libraries used 
 1. [Retrofit](https://github.com/square/retrofit) - A type-safe HTTP client for Android and Java
-2. [Moshi](https://github.com/square/moshi) - Moshi is a modern JSON library for Android and Java. It makes it easy to parse JSON into Java objects
+2. [Moshi](https://github.com/square/moshi) - Moshi is a modern JSON library for Android and Java. It makes it easy to parse JSON into Kotlin objects
 3. [Hilt](https://developer.android.com/jetpack/androidx/releases/hilt) - Hilt provides a standard way to incorporate Dagger dependency injection into an Android application.
 4. [Jetpack Compose](https://developer.android.com/jetpack/compose) - Jetpack Compose is Android’s modern toolkit for building native UI. It simplifies and accelerates UI development on Android.
 5. [ML Kit](https://developers.google.com/ml-kit) - ML Kit brings Google’s machine learning expertise to mobile developers in a powerful and easy-to-use package.
