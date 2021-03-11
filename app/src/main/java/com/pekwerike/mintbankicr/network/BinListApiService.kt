@@ -1,4 +1,4 @@
-package com.pekwerike.mintbankicr.networkservice
+package com.pekwerike.mintbankicr.network
 
 import com.pekwerike.mintbankicr.model.CardDTO
 import retrofit2.Response

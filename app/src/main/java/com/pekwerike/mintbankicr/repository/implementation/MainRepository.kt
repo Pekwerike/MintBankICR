@@ -2,7 +2,7 @@ package com.pekwerike.mintbankicr.repository.implementation
 
 import com.pekwerike.mintbankicr.model.CardDTO
 import com.pekwerike.mintbankicr.model.NetworkResult
-import com.pekwerike.mintbankicr.networkservice.BinListApi
+import com.pekwerike.mintbankicr.network.BinListApi
 import com.pekwerike.mintbankicr.repository.repositoryinterface.BinListNetworkRepository
 import retrofit2.Response
 

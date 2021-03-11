@@ -1,9 +1,6 @@
-package com.pekwerike.mintbankicr.networkservice
+package com.pekwerike.mintbankicr.network
 
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Inject
 import javax.inject.Singleton
 
