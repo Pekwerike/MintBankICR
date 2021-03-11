@@ -12,8 +12,8 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import com.pekwerike.mintbankicr.databinding.CameraPreviewLayoutBinding
+import com.pekwerike.mintbankicr.model.CardScanState
 import com.pekwerike.mintbankicr.ocr.CardNumberExtractor
-import com.pekwerike.mintbankicr.viewmodel.CardScanState
 import com.pekwerike.mintbankicr.viewmodel.MainActivityViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

@@ -25,7 +25,7 @@ binListApi: BinListApi) : BinListNetworkRepository {
             return NetworkResult.Success(body()!!)
         }else{
            return when(code()){
-                // TODO, Messages for various http er
+                // TODO, Messages for various http error
                 404 -> NetworkResult.HttpError.HttpError404
                 400 -> NetworkResult.HttpError.HttpError400
                 else -> NetworkResult.HttpError.UnknownError(code(), message())

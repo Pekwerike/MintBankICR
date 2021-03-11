@@ -1,12 +1,22 @@
 package com.pekwerike.mintbankicr.integrationtest
 
 import android.util.Log
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.runner.AndroidJUnitRunner
 import com.pekwerike.mintbankicr.model.NetworkResult
 import com.pekwerike.mintbankicr.repository.implementation.MainRepository
+import dagger.hilt.android.testing.CustomTestApplication
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.HiltTestApplication
 import junit.framework.Assert.assertEquals
+import junit.framework.Assert.assertTrue
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
+import javax.inject.Inject
 
 /*
   Test Overview
@@ -14,12 +24,19 @@ import org.junit.Test
     dependent on internet connectivity
  */
 private const val NETWORK_RESULT_TAG = "NetworkResult"
+
+
+@HiltAndroidTest
 class MainRepositoryNetworkLayerIntegrationTest {
-    private lateinit var mainRepository: MainRepository
+    @get:Rule
+    var hiltRule = HiltAndroidRule(this)
+
+    @Inject
+    lateinit var mainRepository: MainRepository
 
     @Before
-    fun before() {
-        mainRepository = MainRepository()
+    fun setUp(){
+        hiltRule.inject()
     }
 
     @Test
@@ -40,7 +57,9 @@ class MainRepositoryNetworkLayerIntegrationTest {
                 is NetworkResult.HttpError.UnknownError -> {
                     Log.i("NetworkResult", networkResult.errorMessage)
                 }
-                NetworkResult.Loading -> Log.i(NETWORK_RESULT_TAG, "Loading")
+                NetworkResult.Loading -> {
+                    assertTrue(true)
+                }
                 NetworkResult.NoInternetConnection -> Log.i(NETWORK_RESULT_TAG, "Baba check your internet")
                 NetworkResult.HttpError.HttpError400 -> Log.i(NETWORK_RESULT_TAG, "Bad request omo")
                 NetworkResult.HttpError.HttpError404 -> Log.i(NETWORK_RESULT_TAG, "Lmaoo, error 404")
