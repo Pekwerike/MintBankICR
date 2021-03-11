@@ -5,6 +5,9 @@ import android.widget.Toast
 import androidx.compose.animation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Divider
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
@@ -12,12 +15,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import com.pekwerike.mintbankicr.model.Bank
+import com.pekwerike.mintbankicr.model.CardDTO
 import com.pekwerike.mintbankicr.model.NetworkResult
 import com.pekwerike.mintbankicr.ui.screens.homescreencomponents.*
 import com.pekwerike.mintbankicr.viewmodel.CardScanState
 import com.pekwerike.mintbankicr.viewmodel.MainActivityViewModel
 import com.pekwerike.mintbankicr.viewmodel.NetworkViewModel
+import java.util.*
 
 @ExperimentalAnimationApi
 @Composable
@@ -70,12 +80,46 @@ fun HomePageScreen(
                 )
             }
         }
+
         CardScannerHelperText(
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth()
         )
     }
+}
+@Composable
+fun CardMetaData(cardDTO: CardDTO){
+    Column {
+        Text(text = "Card Details", style = MaterialTheme.typography.h6,
+        fontWeight = FontWeight.SemiBold)
+        Divider()
+        CardMetaDataSingleTextRow(label = "Brand", value = (cardDTO.brand?: "Unknown Brand").toUpperCase(
+            Locale.ROOT))
+        CardMetaDataSingleTextRow(label = "Type", value = cardDTO.type?: "Unknown Type")
+        CardMetaDataSingleTextRow(label = "Bank", value = cardDTO.bank?.bankName?: "Unknown Bank")
+        CardMetaDataSingleTextRow(
+            label = "Website",
+            value = cardDTO.bank?.bankWebsite ?: "site undefined"
+        )
+        Divider()
+        CardMetaDataSingleTextRow(
+            label = "Country",
+            value = cardDTO.country?.name + cardDTO.country?.emoji
+        )
+        CardMetaDataSingleTextRow(label = "Currency", value = cardDTO.country?.currency?:"Undefined")
+
+    }
+}
+
+@Composable
+fun CardMetaDataSingleTextRow(label: String, value: String){
+    Text(text = buildAnnotatedString {
+        withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)){
+            append("$label: ")
+        }
+        append(value)
+    })
 }
 
 @Composable
