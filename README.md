@@ -47,9 +47,9 @@ All long running operations(like running the machine learning text recognition a
 a separate thread by Kotlin coroutine framework.
 
 * ### Model
-Tne model layer consits of the card details representation and the network result states 
+The model layer consits of the card details representation and the network result states 
 
-* ## Open Source Libraries used 
+## Open Source Libraries used 
 1. [Retrofit](https://github.com/square/retrofit) - A type-safe HTTP client for Android and Java
 2. [Moshi](https://github.com/square/moshi) - Moshi is a modern JSON library for Android and Java. It makes it easy to parse JSON into Java objects
 3. [Hilt](https://developer.android.com/jetpack/androidx/releases/hilt) - Hilt provides a standard way to incorporate Dagger dependency injection into an Android application.
