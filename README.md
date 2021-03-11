@@ -24,17 +24,17 @@ MintBankICR's user interface was built using Android’s modern toolkit for buil
 
 * ### Network Layer 
 MintBankICR uses Retrofit to make a GET HTTP request to https://lookup.binlist.net/, then parses the response body into Kotlin object with Moshi. 
-Kotlin sealed class feature was deployed to ensure a robust network error handling mechanism 
+Kotlin sealed class feature was deployed to ensure a robust yet concise network error handling mechanism 
 
 * ### Test Layer
-MintBankICR test layer contains local unit tests, instrumented unit tests, integration tests and UI tests for the various components of the app.
-More test cases still needs to be covered
+MintBankICR test layer contains local unit tests, instrumented unit tests, integration tests, and UI tests for the various components of the app.
+More test cases still need to be covered
 
 * ### Dependency Injection
-The dependency injection layer was completely managed by Hilt. This layer provides dependencies to the various layers of the app including the Main Activity.
+The dependency injection layer was completely managed by Hilt. This layer provides dependencies to the various layers of the app including the UI.
 
 * ### Repository
-The app main repository serves as an interface between the viewmodels and the network layer.
+The app main repository serves as an interface between the view models and the network layer.
 
 * ### Optical Character Recognition + Camera Configuration
 Google's ML Kit exploited for it's on device machine learning capacity, while Androidx CameraX library was configured to capture input images for ML Kit 
