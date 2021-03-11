@@ -1,3 +1,4 @@
+![MintBankICRHomescreenDark](https://user-images.githubusercontent.com/43956851/110859787-43546900-82bc-11eb-9ad2-a882a515f580.png=250x250)
 # MintBankICR
 Mint Bank Intelligent Card Reader (MintBankICR) utilizes cutting-edge machine learning algorithm to perform optical character recognition to extract out metadata from a user credit/debit card.
 
